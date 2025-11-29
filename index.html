@@ -11,7 +11,8 @@
             --secondary-color: #f0f8ff;
             --text-color: #2c3e50;
             --card-bg: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         /* Story Type Themes */
@@ -19,87 +20,241 @@
             --primary-color: #e91e63;
             --secondary-color: #fce4ec;
             --text-color: #880e4f;
-            --card-bg: #ffffff;
+            --gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
 
         .theme-drama {
             --primary-color: #ff9800;
             --secondary-color: #fff3e0;
             --text-color: #e65100;
-            --card-bg: #ffffff;
+            --gradient: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
         }
 
         .theme-mystery {
             --primary-color: #673ab7;
             --secondary-color: #f3e5f5;
             --text-color: #4a148c;
-            --card-bg: #ffffff;
+            --gradient: linear-gradient(135deg, #868f96 0%, #596164 100%);
         }
 
         .theme-suspense {
             --primary-color: #795548;
             --secondary-color: #efebe9;
             --text-color: #3e2723;
-            --card-bg: #ffffff;
+            --gradient: linear-gradient(135deg, #29323c 0%, #485563 100%);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* Navigation Bar */
+        .navbar {
+            background: var(--gradient);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        body {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
             transition: all 0.3s ease;
-            min-height: 100vh;
         }
 
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+
+        .login-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Main Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 2rem;
         }
 
         /* Header Styles */
-        header {
-            background-color: var(--primary-color);
+        .main-header {
+            background: var(--gradient);
             color: white;
-            padding: 1.5rem;
+            padding: 3rem 2rem;
             text-align: center;
-            border-radius: 15px;
-            margin-bottom: 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
+        }
+
+        .main-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
         }
 
         .theme-indicator {
-            margin-top: 10px;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             opacity: 0.9;
             background: rgba(255, 255, 255, 0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 10px 25px;
+            border-radius: 25px;
             display: inline-block;
         }
 
-        /* Story Grid */
+        /* Story of the Day */
+        .story-of-day {
+            background: var(--gradient);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .story-of-day:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-of-day h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .daily-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* Ideas Section */
+        .ideas-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .ideas-section h2 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .idea-form {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .idea-input, .discussion-input {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .submit-idea-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-idea-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Stories Grid */
         .stories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .story-card {
             background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 20px;
+            padding: 2rem;
             box-shadow: var(--shadow);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             border: 3px solid transparent;
             position: relative;
             overflow: hidden;
@@ -112,261 +267,216 @@
             left: 0;
             right: 0;
             height: 4px;
-            background-color: var(--primary-color);
+            background: var(--gradient);
         }
 
         .story-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px);
             border-color: var(--primary-color);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         .story-card h3 {
             color: var(--primary-color);
-            margin-bottom: 12px;
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-
-        .story-card .category {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            display: inline-block;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-
-        .story-card .description {
-            color: var(--text-color);
-            opacity: 0.8;
-            font-size: 0.95rem;
-            margin-top: 12px;
-            line-height: 1.5;
-        }
-
-        /* Story Reading Page */
-        .story-reading {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 35px;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-            border: 2px solid var(--primary-color);
-        }
-
-        .story-reading h2 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 2rem;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            background-color: var(--primary-color);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .back-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .back-button:hover {
-            background-color: var(--text-color);
-            transform: translateX(-5px);
-        }
-
-        /* Questions Page */
-        .questions-section {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 35px;
-            box-shadow: var(--shadow);
-            border: 2px solid var(--primary-color);
-        }
-
-        .questions-section h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-        }
-
-        .question {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--secondary-color);
-        }
-
-        .question h3 {
-            color: var(--text-color);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 18px;
-            border: 2px solid var(--primary-color);
-            border-radius: 12px;
-            margin: 12px 0;
-            resize: vertical;
-            min-height: 120px;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--text-color);
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .submit-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            display: block;
-            margin: 25px auto;
-        }
-
-        .submit-btn:hover {
-            background-color: var(--text-color);
-            transform: scale(1.05);
-        }
-
-        .answers-section {
-            margin-top: 35px;
-        }
-
-        .answers-section h3 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            text-align: center;
+            margin-bottom: 1rem;
             font-size: 1.5rem;
         }
 
-        /* Answer Items with Likes */
-        .answer-item {
-            background-color: var(--secondary-color);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 15px 0;
-            border-right: 5px solid var(--primary-color);
-            animation: fadeIn 0.5s ease-in;
-            transition: all 0.3s ease;
-        }
-
-        .answer-item:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .answer-meta {
+        .story-card .category {
+            background: var(--gradient);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 25px;
             font-size: 0.85rem;
-            color: var(--text-color);
-            opacity: 0.7;
-            margin-bottom: 8px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* Cafe Section */
+        .cafe-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .cafe-section h2 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .discussion-form {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .discussions-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .discussion-item {
+            background: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-right: 4px solid var(--primary-color);
+        }
+
+        .discussion-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
         }
 
-        .like-btn {
+        .user-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Like and Reply System */
+        .discussion-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .like-btn, .reply-btn {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1.2rem;
-            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
             transition: all 0.3s ease;
-            border-radius: 50%;
+            font-size: 0.9rem;
         }
 
-        .like-btn:hover {
-            transform: scale(1.3);
-            background: rgba(0, 0, 0, 0.1);
+        .like-btn {
+            color: var(--text-color);
         }
 
         .like-btn.liked {
             color: #e74c3c;
         }
 
-        .likes-count {
-            margin-right: 8px;
-            font-weight: bold;
+        .like-btn:hover, .reply-btn:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .reply-btn {
+            color: var(--primary-color);
+        }
+
+        .replies-section {
+            margin-top: 1rem;
+            padding-right: 1rem;
+            border-right: 2px solid var(--secondary-color);
+        }
+
+        .reply-item {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--secondary-color);
+        }
+
+        .reply-form {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .reply-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            resize: vertical;
+            min-height: 60px;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        /* Login Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .login-modal {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .login-modal h2 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: var(--secondary-color);
+            color: var(--text-color);
             font-size: 1rem;
         }
 
-        .question-answers {
-            margin-bottom: 30px;
-        }
-
-        .question-answers h4 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            padding-right: 10px;
-            border-right: 3px solid var(--primary-color);
-        }
-
-        .no-answers {
-            text-align: center;
-            color: var(--text-color);
-            opacity: 0.6;
-            padding: 30px;
-            font-size: 1.1rem;
-        }
-
-        .success-message {
-            background: var(--primary-color);
+        .submit-login-btn {
+            background: var(--gradient);
             color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            text-align: center;
-            font-weight: 500;
-            animation: slideIn 0.5s ease-out;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: all 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+        .submit-login-btn:hover {
+            transform: scale(1.05);
         }
 
         /* Hidden Class */
@@ -374,68 +484,146 @@
             display: none;
         }
 
-        /* Stats Button */
-        .stats-btn {
-            background-color: var(--primary-color);
+        /* Back Button */
+        .back-button {
+            background: var(--gradient);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 1rem 2rem;
             border-radius: 25px;
             cursor: pointer;
-            margin: 15px 0;
+            margin-bottom: 2rem;
             transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
-        .stats-btn:hover {
-            background-color: var(--text-color);
-            transform: scale(1.05);
+        .back-button:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Story Reading */
+        .story-reading {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            border: 2px solid var(--primary-color);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header Section -->
-        <header>
-            <h1>📚 مكتبة القصص</h1>
-            <div class="theme-indicator" id="themeIndicator">
-                الثيم الأساسي - أزرق هادي
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" onclick="showHomePage()">📚 مكتبة القصص</a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showHomePage()">الرئيسية</a></li>
+                <li><a href="#" onclick="showStoriesPage()">مكتبة القصص</a></li>
+                <li><a href="#" onclick="showCafePage()">مقهى الحوار</a></li>
+            </ul>
+            <div class="user-section" id="userSection">
+                <button class="login-btn" onclick="showLoginModal()">تسجيل الدخول</button>
             </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal-overlay hidden">
+        <div class="login-modal">
+            <h2>تسجيل الدخول</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>الاسم:</label>
+                    <input type="text" id="loginName" required>
+                </div>
+                <div class="form-group">
+                    <label>البريد الإلكتروني:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>كلمة السر:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="submit-login-btn">دخول</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div id="homePage" class="container">
+        <header class="main-header">
+            <h1>مرحباً بكم في مكتبة القصص</h1>
+            <div class="theme-indicator" id="themeIndicator"></div>
         </header>
 
-        <!-- Stats Button -->
-        <button class="stats-btn" onclick="showAnswersStats()">📊 إحصائيات الأجوبة</button>
+        <!-- Story of the Day -->
+        <div class="story-of-day" id="storyOfDay" onclick="openDailyStory()">
+            <div class="daily-badge">قصة اليوم</div>
+            <h2 id="dailyStoryTitle">...</h2>
+            <p id="dailyStoryDesc">جاري تحميل قصة اليوم...</p>
+        </div>
 
-        <!-- Main Stories Grid -->
-        <section id="storiesSection" class="stories-grid">
-            <!-- Story cards will be generated by JavaScript -->
-        </section>
-
-        <!-- Story Reading Section -->
-        <section id="storyReadingSection" class="hidden">
-            <button class="back-button" onclick="showStories()">← العودة للقائمة</button>
-            <div class="progress-bar">
-                <div class="progress" id="readingProgress"></div>
+        <!-- Ideas Section -->
+        <section class="ideas-section">
+            <h2>💡 صندوق الاقتراحات</h2>
+            <div class="idea-form">
+                <textarea class="idea-input" id="ideaInput" placeholder="ما الفكرة التي تود أن تراها في القصة القادمة؟ اكتب اقتراحك هنا..."></textarea>
+                <button class="submit-idea-btn" onclick="submitIdea()">إرسال الفكرة ✨</button>
             </div>
-            <div class="story-reading" id="storyContent">
-                <!-- Story content will be loaded here -->
-            </div>
-            <button class="submit-btn" onclick="showQuestions()">أكملت القراءة 💭</button>
-        </section>
-
-        <!-- Questions Section -->
-        <section id="questionsSection" class="hidden">
-            <button class="back-button" onclick="showStoryReading()">← العودة للقصة</button>
-            <div class="questions-section">
-                <h2>💭 فكر فيها...</h2>
-                <div id="questionsContainer">
-                    <!-- Questions will be loaded here -->
-                </div>
-                <div class="answers-section" id="answersContainer">
-                    <!-- Answers will be displayed here -->
-                </div>
+            <div class="discussions-list" id="ideasList">
+                <!-- Ideas will be displayed here -->
             </div>
         </section>
     </div>
+
+    <!-- Stories Library Page -->
+    <div id="storiesPage" class="container hidden">
+        <button class="back-button" onclick="showHomePage()">← العودة للرئيسية</button>
+        <h1 style="text-align: center; color: var(--primary-color); margin-bottom: 3rem;">مكتبة القصص</h1>
+        <div class="stories-grid" id="storiesGrid">
+            <!-- All stories will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Cafe Page -->
+    <div id="cafePage" class="container hidden">
+        <button class="back-button" onclick="showHomePage()">← العودة للرئيسية</button>
+        <section class="cafe-section">
+            <h2>☕ مقهى الحوار</h2>
+            <div class="discussion-form">
+                <textarea class="discussion-input" id="discussionInput" placeholder="ماذا تود أن تناقش مع زوار الموقع؟"></textarea>
+                <button class="submit-idea-btn" onclick="submitDiscussion()">نشر النقاش 💬</button>
+            </div>
+            <div class="discussions-list" id="discussionsList">
+                <!-- Discussions will be displayed here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Story Reading Section -->
+    <section id="storyReadingSection" class="container hidden">
+        <button class="back-button" onclick="showStoriesPage()">← العودة للمكتبة</button>
+        <div class="story-reading" id="storyContent">
+            <!-- Story content will be loaded here -->
+        </div>
+        <button class="submit-idea-btn" onclick="showQuestions()" style="margin-top: 2rem;">أكملت القراءة 💭</button>
+    </section>
+
+    <!-- Questions Section -->
+    <section id="questionsSection" class="container hidden">
+        <button class="back-button" onclick="showStoryReading()">← العودة للقصة</button>
+        <div class="ideas-section">
+            <h2>💭 فكر فيها...</h2>
+            <div id="questionsContainer">
+                <!-- Questions will be loaded here -->
+            </div>
+            <div class="discussions-list" id="answersContainer">
+                <!-- Answers will be displayed here -->
+            </div>
+        </div>
+    </section>
 
     <script>
         // All 12 Stories Data
@@ -2513,7 +2701,7 @@ theme: "theme-drama",
                 title: "على الاريكة",
                 category: "رومانسية",
 theme: "theme-romance",
-                description: "وحدة هذه الليلة على وشك التلاشي",
+                description: "وحدة هذه اليلة على وشك التلاشي",
                 content: `على الاريكة:
 تنهدت وهي جالسة وحدها على سريرهما زوجها العزيز ليس معاها الان هو يعمل عملا اضافيا في مكتبه الذي في منزلهم جاهدت نفسها كثيرا حتى لا تذهب اليه وتتفقده فهي تخشى ان يفقد تركيزه ولا ينجز عمله وحتى تحاول ان تنسى ما بخلدها من افكار خطيرة بالذهاب اليه في هذه الثانية قررت ان تدرس من اجل امتحانها هي لم يكن لها النية ان تفتح الكتاب منذ البداية الا انها تحتاج ان تلهي افكارها ولذا فتحته في النهاية لم تكن اكثر من عشرين دقيقة من التركيز التام الذي اجبرت نفسها عليه حتى احست بنظرات تخترق غشاء قلبها رفعت راسها بهدوء لتتأكد من صاحبها فاذا به زوجها الذي اشتاقت اليه ينظر اليها بينما هو متكئ على عتبة باب الغرفة كادت تقفز من مكانها فرحة لوجوده الا انها ضبطت نفسها بصعوبة حتى لا يصبح مظهرها احمق امامه وحتى لا يشعر بالذنب لتركها وحيدة حركت اصابعها بهدوء مصطنع ووضعت شعرها خلف اذنها وهي تساله (ما الامر يا عزيزي؟ هل تحتاج شيئا ما؟ وجبة منتصف الليل؟ بعض الحلويات ؟) ابتسم بهدوء وهو ينظر الى زوجته التي تظن انها نجحت في اخفاء حماسها ثم اقترب منها وامسك بيدها بخفة وهو يقول (تعالي معي) فوجئت بتصرفه هذا هو في العادة يفسر نفسه قبل ان ياخذها معه ولكنها لم تكره انه ياخذها بيدها الى مكان ما فتبعته بدون ان تقول شيئا وصلوا الى وجهتهم الا انه لم يترك يدها بعد يبدو انه نسي انه يمسك يدها وهي كانت افكارها محوطة حول يدها التي ياسرها زوجها قال لها مخرجا اياها من افكرها هذه (تدا!) رفعت راسها لترى سبب حماسه كان قد جهز لهم بعض المرطبات مع الكثير من الفشار والفواكه نظرت له وهي تحاول ان تخرج ما بافكارها من فمه (انها ليلة افلام يا عزيزتي! لقد جهزت هذا كي نستمتع معا الليلة!) لم تتغير تعابير وجهها كثيرا اذ انها كانت بالفعل تفكر في السؤال التالي ولكنها بدت قلقه (وعملك؟) خشيت انها اذا استمتعت معه الليلة لن تراه غدا وهذا يزعجها جدا هو بالفعل كان بعيدا على نظرها وهو في المنزل لعشرين دقيقة وهي احست انها ستفقد نفسها من ولهها عليه ضحك زوجها عليها وتركها حائرة (هههههه لم يكن لدي عمل منذ البداية كنت فقد اجهز ليلتنا الممتعة هذه!) اراد ان يغضيها ايضا فمسح ابتسامته واستبدلها بتعبير حزين (اوه هل يعقل انك مشغولة الليلة؟) هو يعلم انها لم تكن تدرس حقا لانها تريد وانها ارادت ان تحجب افكارها بغمس نفسها بالدراسة هو يعرفها جيدا توترت وامسكت وجنتيه وهي توجه عيونه اليها (ماذا؟! لا لا لست مشغولة اطلاقا!) امسك بيديها الدافئتين وقبلهما برفق وهو يقول (حقا؟) كادت تفقد وعيها من الصدمة (!!!!! نعم نعم !!!) ابتسم مرة اخرى وقال (جيد اذا!) حاولت ان تغير الموضوع لان قلبها يكاد يخرج من مكانه (بالـ بالمناسبة يبدو ان هناك اريكة واحدة فقط ساذهب لاحضر واحدة اخرى) ابتسم بخبث وهو يقول (لماذا؟) لم تفهم (؟ لكي اجلـ) لم يمهلها حتى تكمل الجملة الشيء التالي الذي رأته كان هي ترتفع عن الارض وتستقر بين يديه وهو يقول (لماذا تحتاجين مقعدا وحضني موجود؟) ومشى بها حتى جلس على الكرسي وهو يحملها ثم ابتسم ابتسامة كبيرة وهو يقول (اترين؟ هذا افضل من احضار كرسي اخر) رسميا قضي عليها من الصدمة لم تجفل حتى وضلت تحاول ان تستوعب ما قام به وهو الذي اعجبه ذلك قرر ان لا يقول شيئا وان يكمل ما بدأه امسك البطانية وغطاها كانت في تلك اللحظة التي شعر بشيء يحترق نظر اليها فكان وجهها قد صبغ بالكامل باللون الاحمر وفمها مفتوحا قليلا استوعبت اخيرا ما جرى (؟!؟!!!!!؟؟؟!!!!؟؟! ) نظرت له ثم الى الباب ثم الى البطانية لعدة مرات اطلق هو ضحكة كبيرة من ارتباكها هذا فهمت اخيرا ان هذا كان مسعاه من البداية حتى يغيضها (ما؟! هل تريد قتلي بسكتة قلبية ؟! انت تعلم اني ضعيفة لهذه المواقف!) اوقف ضحكته بصعوبة وهو يرد عليها بينما وضع جبينه على جبينها الساخن (انت تقولين ذلك ولكن قولي الحقيقة لقد اعجبك ذلك اليس كذلك؟) لم تقل حمره وجهها وهي ترد عليه (……. هذا لم…. يكن سيئا) ابتسم مرة اخرى ثم احضر البطيخ كذلك حتى يساعدها على ان تهدأ قليلا (وهذا هو المطلوب والان لناكل بعض البطيخ الطازج ونحن نشاهد هذا الفيلم لقد سمعت ان النهاية سعيدة ومريحة للغاية وانا متحمس له!) أومأت براسها موافقة ومدت يدها لتحضر البطيخ حتى تطعمه الا انه سبقها ابتسم بخبث وهو يمسك حبة البطيخ باصابعه ثم اشار لها لتفتح فمها هو يحاول ان يكون المسيطر تماما الليلة وهذا لم يعجبها فلم تفتح فمها فاقترب منها قليلا ثم قال مصطنعا الحزن (هل مللت مني؟ لابد انك غاضبة ايضا هذا صحيح لم اكن الزوج المثالي لك ابدا انا لا استحق امرأة مثلك يا عزيزتي ) وقعت تماما له ونظرت له بتعاطف ثم قالت (لا لا لا لقد كنت امزح احب البطيخ! ثم يا هذا لا تتحدث عن زوجي هكذا مرة اخرى انا ساجعلك تندم اذا ما سمعت هذا الكلام مرة اخرى ) مسح كل الحزن في ثانية وابتسم لها (اتمنى ان اراك تحاولين ~) فتحت فمها ليطعمها دون ان ترد كان قلبها الذي ينبض بجنون كافيا كرد هو حتى ازال بذور البطيخ من اجلها وذلك قد حرك قلبها له اكثر وضعت راسها على صدر زوجها وقد ارتاحت له ولوجوده ثم بعد ربع ساعة فقط كانت قد نامت بين ذراعيه بدلا من مشاهدة الفلم معه هو الذي كانت هذه خطته منذ البداية اكمل الفيلم بسعادة وهو يستمتع بوجودها في احضانه وقرر ان يغيضها على هذا كثيرا في المستقبل
 `,
@@ -4088,7 +4276,7 @@ Her pov..
                 title: "آخر لقمة",
                 category: "رومانسية",
  theme: "theme-romance",
-                description: " من سيكون صاحب اخر لقمة",
+                description: "ً من سيكون صاحب اخر لقمة",
                 content: `اخر لقمة:
 انه فوضوي تماما يحب ان ينشر فوضاه اينما ذهب يرمي احذيته بكسل عندما يدخل المنزل بعد العمل بجد طوال اليوم سوف يدخل بكسل الى الحمام ليغير ثيابه على مضض ريثما اضع الطعام على الطاولة وبالطبع سيترك ملابسه مرمية ثم اراه بعيون تشرق سعادة كما لو انها اول وجبة يتناولها منذ ايام يتقدم الي ويعطيني قبله خفيفة على خدي وهو يشكرني على الطعام الذي لم يتذوقه بعد ساراه يتناول الطعام بشراهة بينما يمدح كل لقمة يضعها في فمه واتنهد وانا افكر بكيف انتهى بس الحال الى الوقوع في حب هذا الرجل اراه ينهض وهو يبتسم بينما يقرا عقلي باستخدام تعابير وجهي ثم سيقدم لي الطعام ويصير ان يتطعمني بنفسه بعد العشاء سانخرط انا في اعمال التنظف والترتيب بهمة ودون كلل بينما سيتبعني في ارجاء المنزل وهو يخبرني بكل تفاصيل يومه وما حدث معه بكل حماس وكما لو انه طفل قد عاد الى المنزل بعد يوم دراسي سيقص علي ما حدث مع مديره الذي يحب ان يتباها بماله وزميله الذي تزوج حديثا و حتى صديقه المقرب الذي يكثر التذمر ويحدثه عن فتح عمل معا والاستقالة من الشركة انا سعيدة فهو دائما حريص على ابلاغي انه عامل زميلاته ببرود وانه كان يفكر بي طوال الوقت وبينما اسمع حديثه وهو يتبعني وانا ارتب واغسل كما لو انه موسيقى تطرب لها اذني سيدرك عاجلا اني كنت اعمل طوال الوقت وانه لم يساعدني ولو قليلا يزرق وجهه ثم سيحتضنني من الخلف في محاولة منه لثني عن القيام بمزيد من العمل ثم سيطالب بان اعطيه ما يفعل وانه من غير العادل ان اقوم بكل اعمال المنزل استغل الفرصة واخبره بنية مني لاغاضته (ما رأيك يا عزيزي ان ترتب ملابسك واحذيتك اولا) سيسرع الى ترتيبها بشكل غير مسبوق كما لو انه طفل كُلِف بمهمته الاولى وسيرتب احذيته وملابسه ثم يعود الي ليكتشف اني قد انتهيت من تنظيف كل شي في الوقت الذي استغرقه لترتيب اشياءه بنظرة مستاءة يحملني وهو ينظر الى وجهي المنتصر (انتِ فعلا… لقد خدعتني مرة اخرى! هذا ليس عدلا! كنت اريد ان انظف معكِ الا انكِ مرة اخرى استثنيتني) ارد عليه وانا اضحك (اعني انت من رمى اشياءه بكسل فور دخولك اليس كذلك) يتجهم وجهه قليلا وهو يتابع سيره الى الاريكة (انت تعلمين تماما اني اكون متعبا جدا واني في شوق يعمي بصيرتي لتناول الطعام الذي تصنعينه عزيزتي … بمجرد ان ادخل المنزل تخدرني رائح الطعام اللذيذة كما لو انك تحسبين الوقت الذي ساعود فيه تماما حتى تكون الرائحة مشبعة بشكل مثالي في اللحظة التي افتح بها الباب) اضحك قليلا وانا اهمس في اذنه (ياللعجب هل ادركت ذلك الان فقط؟ بالطبع انا اوقت الوقت بشكل دقيق حتى يكون مثاليا عزيزي … انا احب ان اكون الفائزة دائما ولذا العب بقذارة بشكل متعمد) يتبسم قليلا وهو يقول (وانا اتركك تفوزين دائما مع علمي بهذه الحيل الطفولية) قبل ان ارد سنكون قد جلسنا على الاريكة ويكون زوجي قد شغل فلما ما ليغير الموضوع ثم سنقضي الليلة نشاهد معا في الصباح التالي اكون متاكدة اني استيقضت قبله حتى اعد الافطار لنا سيستيقظ فور ان يشم رائحة البيض المقلي والتوست المحمص بعناية ثم يجر نفسه بكسل بعد ان يغسل وجهه سيحاول ان يلعب مقلبه المعتاد ان يتسلل خلفي ولذا احب ان العب الدور واتركه ياسرني من الخلف وهو يصبح علي بكل حب مع قبلة صباحية وهو يشكرني على الطعام قبل ان يتذوقه حتى ثم سنجلس على الطاولة لنتناول الافطار معا احب ان اراه منغمسا في قراءة الاخبار على جهازه اللوحي في الصباح بينما يتناول الطعام على مهل هو يكون مختلفا تماما عن شراهته عندما يتناول العشاء ولذا احب ان اقارن سلوكه بعد تناول الافطار سياخذ حماما سريعا ريثما انظف الاطباق تختلف فترة استحمامه على حسب مزاجه اذا كان قد قرأ شيئا جعله يشعر بالسوء فهو سيتاخر في الاستحمام واذا قرأ اخبارا ساره فسياخذ مدة اقل استطيع ان اعلم مزاجه من فترة استحمامه فور ان يخرج سيرى اني قد جهزت ملابسه التي كان قد اختار ان يرتديها منذ الامس وسيرتدي ملابسه بشعره المبلل بلا اهتمام هنا سادخل واكتشف انه قد تجهز الا ان شعره لم يجف بعد وانه يبحث عن حزامه (ما بال شعرك المبلل يا عزيزي! ستمرض اذا خرجت الى العمل هكذا) ياخذ نظرة سريعة علي ثم يبتسم ويقول (هيا يا عزيزتي انت تبالغين لا اكثر سيجف وحده اذا تركته الاهم من ذلك … هل رأيتي حزامي؟ انا ابحث عنه منذ فترة) اتنهد وانا اقترب ومعي مجفف الشعر (دعني اجفف شعرك اولا ثم ساعطيك الحزام) بعد عدة دقائق من الاقناع ساتمكن من جعله يجلس لتجفيف شعره وبعد ان اسرح شعره ساخذ نظرة واحدة على ملابسه واخرج حزامه (هذا هو الحزام الذي تبحث عنه؟) ينهض سريعا وهو يعانقني بحرارة (نعم هذا هو!!) ثم يقبلني على خدي وهو يشكرني (لا اعرف ماذا كنت سافعل بدرونك يا عزيزتي! شكرا لكِ!) انظر له وانا اغير الموضوع حتى لا يدرك اني قد احمررت خجلا (ا..اوه بالمناسبة لقد رايت مقطعا يبرز طريقة جيدة للبس الحزام) ينظر الي وهو يعلم تماما اني احاول اخفاء خجلي (فعلا؟ ارني) ثم اشرح له الطريقه دون ان انتبه على ابتسامته التي تشكلت وهو يسمع (هممم هذه طريقة صعبة بعض الشيء للفهم من خلال الكلمات فقط هلا طبقتيها حتى ارى) اخرج هاتفي (استطيع فقط ان اريك المقط-) ياخذ هاتفي (لا … اريد تطبيقا عمليا) يزداد وجهي احمرارا وانا اراه يستمتع باغاضتي وارى انه لا مفر من التطبيق العملي ادخل الحزام بيدي التي ترجف قليلا من الاحراج واحرك اصابعي ببطء وانا اشده قليلا حول خاصرته فور ان انتهي ارفع عيني لارى وجهه قد احمر خجلا هو الاخر ثم انفجر ضحكا (هههههه مهلا انت من طلبت مني ان اقوم بذلك فلماذا الاحراج يا عزيزي ام..) اقترب اليه والف يدي حول عنقه لاجذبه الي واهمس في اذنه (ان هذا ليس ما اردته) هكذا اكون قد انهيت انتقامي فاخلي سبيله وانا ابتسم ثم اخرج من الغرفة بسرعة قبل ان يستعيد شتات نفسه واذهب لاخراج حذاءه سيخرج بعد فترة من الغرفة ووجه لايزال محمرا وقد ارتدى معطفه وارخى ربطة عنقه قليلا انتظره قرب الباب حتى اعطيه حقيبته ثم انتبه على ربطة عنقه الغير مرتبة (مهلا عزيزي لا تخبرني انك نسيت كيف تربطها ايضا) اسلمه حقيبته ثم اشرع في ترتيب ربطة عنقه متناسية الحرارة التي يشتعل بها وجهه قبل ان انتهي اراه قد ضمني بقوة ودفن وجهه في كتفي وهو يقول (هذا سيء للقلب يا عزيزتي … ارحمي زوجك ارجوك فانا بالكاد اسيطر على نفسي الان) اهمس في اذنه (من الذي طلب مني تطبيقا عمليا؟) سيفلتني وهو يقول (حسنا حسنا انت الفائزة هذه المرة .. لكن..) يعطيني قبله خفيفة على رأسي وهو يقول (لا تعتقدي ان انتصاراتكِ ستستمر) ثم وقبل ان يسمع ردي سيخرج سريعا ويذهب الى عمله وهو يعلم تمام العلم اني احترق حاليا هو شخص فوضوي جدا ويكره الخسارة يحب ان يترك اشياءه في اي مكان الا انه ايضا الشخص الذي احبه والشخص الذي يجعلني اشعر بالحب بمجرد الكون معه في نفسه المنزل ولا يفشل ابدا في جعلي عاجزة عن الحديث في نهاية كل محادثة كما لو انه يحب ان تكون اللقمة الاخيرة له مهما حدث وهل تعلمين ماذا.. انا احب ان تكون اخر لقمة له.
 
@@ -4385,6 +4573,119 @@ Her pov..
             }
         ];
 
+        // نظام المستخدمين
+        let currentUser = null;
+
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('users') || '[]');
+        }
+
+        function saveUser(user) {
+            const users = getUsers();
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        function findUser(email, password) {
+            const users = getUsers();
+            return users.find(u => u.email === email && u.password === password);
+        }
+
+        // نظام التخزين للأفكار
+        function getIdeas() {
+            return JSON.parse(localStorage.getItem('ideas') || '[]');
+        }
+
+        function saveIdea(idea) {
+            const ideas = getIdeas();
+            ideas.unshift({
+                id: Date.now(),
+                ...idea,
+                timestamp: new Date().toLocaleString('ar-SA')
+            });
+            localStorage.setItem('ideas', JSON.stringify(ideas));
+        }
+
+        // نظام التخزين للنقاشات والردود
+        function getDiscussions() {
+            return JSON.parse(localStorage.getItem('discussions') || '[]');
+        }
+
+        function saveDiscussion(discussion) {
+            const discussions = getDiscussions();
+            discussions.unshift({
+                id: Date.now(),
+                ...discussion,
+                likes: [],
+                replies: [],
+                timestamp: new Date().toLocaleString('ar-SA')
+            });
+            localStorage.setItem('discussions', JSON.stringify(discussions));
+        }
+
+        function toggleLike(discussionId) {
+            if (!currentUser) {
+                showLoginModal();
+                return false;
+            }
+
+            const discussions = getDiscussions();
+            const discussion = discussions.find(d => d.id === discussionId);
+            
+            if (!discussion) return false;
+
+            const userIndex = discussion.likes.indexOf(currentUser.email);
+            if (userIndex > -1) {
+                discussion.likes.splice(userIndex, 1);
+            } else {
+                discussion.likes.push(currentUser.email);
+            }
+
+            localStorage.setItem('discussions', JSON.stringify(discussions));
+            return true;
+        }
+
+        function addReply(discussionId, replyText) {
+            if (!currentUser) {
+                showLoginModal();
+                return false;
+            }
+
+            const discussions = getDiscussions();
+            const discussion = discussions.find(d => d.id === discussionId);
+            
+            if (!discussion) return false;
+
+            discussion.replies.unshift({
+                id: Date.now(),
+                text: replyText,
+                user: currentUser.name,
+                timestamp: new Date().toLocaleString('ar-SA')
+            });
+
+            localStorage.setItem('discussions', JSON.stringify(discussions));
+            return true;
+        }
+
+        // نظام التخزين للأجوبة
+        function getStoryAnswers(storyId) {
+            const saved = localStorage.getItem(`story_${storyId}_answers`);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveStoryAnswer(storyId, questionIndex, answer) {
+            const answers = getStoryAnswers(storyId);
+            answers.push({
+                id: Date.now(),
+                text: answer,
+                questionIndex: questionIndex,
+                timestamp: new Date().toLocaleString('ar-SA'),
+                storyId: storyId,
+                user: currentUser ? currentUser.name : 'زائر'
+            });
+            localStorage.setItem(`story_${storyId}_answers`, JSON.stringify(answers));
+        }
+
         // نظام الثيمات
         function setTheme(themeClass, storyTitle = '') {
             document.body.className = themeClass;
@@ -4403,170 +4704,357 @@ Her pov..
             }
         }
 
-        // نظام تخزين الأجوبة واللايكات
-        function getStoryAnswers(storyId) {
-            const saved = localStorage.getItem(`story_${storyId}_answers`);
-            return saved ? JSON.parse(saved) : [];
+        // تسجيل الدخول
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
         }
 
-        function saveStoryAnswer(storyId, questionIndex, answer) {
-            const answers = getStoryAnswers(storyId);
-            const newAnswer = {
-                id: Date.now(),
-                text: answer,
-                questionIndex: questionIndex,
-                timestamp: new Date().toLocaleString('ar-SA'),
-                storyId: storyId,
-                likes: 0,
-                likedBy: []
-            };
-            
-            answers.push(newAnswer);
-            localStorage.setItem(`story_${storyId}_answers`, JSON.stringify(answers));
-            return newAnswer;
+        function hideLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
         }
 
-        function toggleLike(answerId, storyId) {
-            const answers = getStoryAnswers(storyId);
-            const answerIndex = answers.findIndex(a => a.id === answerId);
+        function handleLogin(event) {
+            event.preventDefault();
             
-            if (answerIndex === -1) return false;
+            const name = document.getElementById('loginName').value;
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
 
-            const userLikes = JSON.parse(localStorage.getItem('user_likes') || '{}');
-            const hasLiked = userLikes[answerId];
-
-            if (hasLiked) {
-                answers[answerIndex].likes--;
-                answers[answerIndex].likedBy = answers[answerIndex].likedBy.filter(id => id !== 'user');
-                delete userLikes[answerId];
-            } else {
-                answers[answerIndex].likes++;
-                answers[answerIndex].likedBy.push('user');
-                userLikes[answerId] = true;
+            let user = findUser(email, password);
+            
+            if (!user) {
+                user = { name, email, password };
+                saveUser(user);
             }
 
-            localStorage.setItem(`story_${storyId}_answers`, JSON.stringify(answers));
-            localStorage.setItem('user_likes', JSON.stringify(userLikes));
-            return !hasLiked;
+            currentUser = user;
+            updateUserSection();
+            hideLoginModal();
+            
+            document.getElementById('loginName').value = '';
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
         }
 
-        function displayStoryAnswers(storyId) {
-            const answers = getStoryAnswers(storyId);
-            const answersContainer = document.getElementById('answersContainer');
-            const userLikes = JSON.parse(localStorage.getItem('user_likes') || '{}');
-            
-            answersContainer.innerHTML = '<h3>💬 أجوبة القراء:</h3>';
-            
-            if (answers.length === 0) {
-                answersContainer.innerHTML += `
-                    <div class="no-answers">
-                        لا توجد أجوبة بعد... كن أول من يشارك رأيه!
+        function updateUserSection() {
+            const userSection = document.getElementById('userSection');
+            if (currentUser) {
+                userSection.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-avatar">${currentUser.name.charAt(0)}</div>
+                        <span>مرحباً، ${currentUser.name}</span>
                     </div>
                 `;
+            } else {
+                userSection.innerHTML = '<button class="login-btn" onclick="showLoginModal()">تسجيل الدخول</button>';
+            }
+        }
+
+        // التنقل بين الصفحات
+        function showHomePage() {
+            hideAllPages();
+            document.getElementById('homePage').classList.remove('hidden');
+            setTheme('', '');
+            displayDailyStory();
+            displayIdeas();
+        }
+
+        function showStoriesPage() {
+            hideAllPages();
+            document.getElementById('storiesPage').classList.remove('hidden');
+            setTheme('', '');
+            displayAllStories();
+        }
+
+        function showCafePage() {
+            hideAllPages();
+            document.getElementById('cafePage').classList.remove('hidden');
+            setTheme('', '');
+            displayDiscussions();
+        }
+
+        function hideAllPages() {
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('storiesPage').classList.add('hidden');
+            document.getElementById('cafePage').classList.add('hidden');
+            document.getElementById('storyReadingSection').classList.add('hidden');
+            document.getElementById('questionsSection').classList.add('hidden');
+        }
+
+        // قصة اليوم
+        function getDailyStory() {
+            const today = new Date().toDateString();
+            const saved = localStorage.getItem('daily_story');
+            
+            if (saved) {
+                const { date, storyId } = JSON.parse(saved);
+                if (date === today) {
+                    return stories.find(s => s.id === storyId);
+                }
+            }
+            
+            const randomStory = stories[Math.floor(Math.random() * stories.length)];
+            localStorage.setItem('daily_story', JSON.stringify({
+                date: today,
+                storyId: randomStory.id
+            }));
+            
+            return randomStory;
+        }
+
+        function displayDailyStory() {
+            const dailyStory = getDailyStory();
+            document.getElementById('dailyStoryTitle').textContent = dailyStory.title;
+            document.getElementById('dailyStoryDesc').textContent = dailyStory.description;
+        }
+
+        function openDailyStory() {
+            const dailyStory = getDailyStory();
+            showStoryReading(dailyStory.id);
+        }
+
+        // عرض جميع القصص
+        function displayAllStories() {
+            const storiesGrid = document.getElementById('storiesGrid');
+            storiesGrid.innerHTML = stories.map(story => `
+                <div class="story-card" onclick="showStoryReading(${story.id})">
+                    <span class="category">${story.category}</span>
+                    <h3>${story.title}</h3>
+                    <p>${story.description}</p>
+                </div>
+            `).join('');
+        }
+
+        // عرض الأفكار
+        function displayIdeas() {
+            const ideas = getIdeas();
+            const ideasList = document.getElementById('ideasList');
+            
+            if (ideas.length === 0) {
+                ideasList.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد أفكار بعد...</p>';
                 return;
             }
 
-            const answersByQuestion = {};
-            answers.forEach(answer => {
-                if (!answersByQuestion[answer.questionIndex]) {
-                    answersByQuestion[answer.questionIndex] = [];
-                }
-                answersByQuestion[answer.questionIndex].push(answer);
-            });
-
-            Object.keys(answersByQuestion).forEach(questionIndex => {
-                const questionAnswers = answersByQuestion[questionIndex];
-                
-                answersContainer.innerHTML += `
-                    <div class="question-answers">
-                        <h4>🔄 السؤال ${parseInt(questionIndex) + 1}</h4>
-                `;
-                
-                questionAnswers.forEach(answer => {
-                    const isLiked = userLikes[answer.id];
-                    answersContainer.innerHTML += `
-                        <div class="answer-item">
-                            <div class="answer-meta">
-                                <span>⏰ ${answer.timestamp}</span>
-                                <button class="like-btn ${isLiked ? 'liked' : ''}" 
-                                        onclick="handleLike(${answer.id}, ${storyId})">
-                                    <span class="likes-count">${answer.likes}</span> 
-                                    ${isLiked ? '❤️' : '🤍'}
-                                </button>
-                            </div>
-                            <p>${answer.text}</p>
-                        </div>
-                    `;
-                });
-                
-                answersContainer.innerHTML += `</div>`;
-            });
+            ideasList.innerHTML = ideas.map(idea => `
+                <div class="discussion-item">
+                    <div class="discussion-meta">
+                        <span>⏰ ${idea.timestamp}</span>
+                        <span class="user-badge">${idea.user}</span>
+                    </div>
+                    <p>${idea.text}</p>
+                </div>
+            `).join('');
         }
 
-        function handleLike(answerId, storyId) {
-            const liked = toggleLike(answerId, storyId);
-            displayStoryAnswers(storyId);
-        }
-
-        // Navigation Functions
-        function showStories() {
-            setTheme('', '');
-            document.getElementById('storiesSection').classList.remove('hidden');
-            document.getElementById('storyReadingSection').classList.add('hidden');
-            document.getElementById('questionsSection').classList.add('hidden');
-        }
-
-        function showStoryReading(storyId = null) {
-            if (storyId) {
-                const story = stories.find(s => s.id === storyId);
-                document.getElementById('storyContent').innerHTML = 
-                    `<h2>${story.title}</h2>
-                     <div class="category">${story.category}</div>
-                     <p>${story.content}</p>`;
-                currentStoryId = storyId;
-                
-                // تطبيق ثيم القصة
-                setTheme(story.theme, story.title);
-                
-                const progressBar = document.getElementById('readingProgress');
-                progressBar.style.width = '0%';
-                setTimeout(() => { progressBar.style.width = '100%'; }, 100);
-            }
+        // عرض النقاشات مع اللايكات والردود
+        function displayDiscussions() {
+            const discussions = getDiscussions();
+            const discussionsList = document.getElementById('discussionsList');
             
-            document.getElementById('storiesSection').classList.add('hidden');
+            if (discussions.length === 0) {
+                discussionsList.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد نقاشات بعد...</p>';
+                return;
+            }
+
+            discussionsList.innerHTML = discussions.map(discussion => {
+                const isLiked = currentUser && discussion.likes.includes(currentUser.email);
+                return `
+                <div class="discussion-item">
+                    <div class="discussion-meta">
+                        <span>⏰ ${discussion.timestamp}</span>
+                        <span class="user-badge">${discussion.user}</span>
+                    </div>
+                    <p>${discussion.text}</p>
+                    
+                    <div class="discussion-actions">
+                        <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="handleLike(${discussion.id})">
+                            ❤️ ${discussion.likes.length}
+                        </button>
+                        <button class="reply-btn" onclick="toggleReplyForm(${discussion.id})">
+                            💬 رد
+                        </button>
+                    </div>
+
+                    <div class="reply-form" id="replyForm-${discussion.id}">
+                        <textarea class="reply-input" id="replyInput-${discussion.id}" placeholder="اكتب ردك..."></textarea>
+                        <button class="submit-idea-btn" onclick="submitReply(${discussion.id})" style="padding: 0.5rem 1rem; font-size: 0.9rem;">إرسال الرد</button>
+                    </div>
+
+                    ${discussion.replies.length > 0 ? `
+                    <div class="replies-section">
+                        ${discussion.replies.map(reply => `
+                            <div class="reply-item">
+                                <div class="discussion-meta">
+                                    <span>⏰ ${reply.timestamp}</span>
+                                    <span class="user-badge">${reply.user}</span>
+                                </div>
+                                <p>${reply.text}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ` : ''}
+                </div>
+                `;
+            }).join('');
+        }
+
+        // إدارة الردود
+        function toggleReplyForm(discussionId) {
+            if (!currentUser) {
+                showLoginModal();
+                return;
+            }
+
+            const replyForm = document.getElementById(`replyForm-${discussionId}`);
+            replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function submitReply(discussionId) {
+            const replyInput = document.getElementById(`replyInput-${discussionId}`);
+            const replyText = replyInput.value.trim();
+
+            if (!replyText) {
+                alert('⚠️ الرجاء كتابة رد أولاً');
+                return;
+            }
+
+            if (addReply(discussionId, replyText)) {
+                replyInput.value = '';
+                document.getElementById(`replyForm-${discussionId}`).style.display = 'none';
+                displayDiscussions();
+            }
+        }
+
+        function handleLike(discussionId) {
+            if (toggleLike(discussionId)) {
+                displayDiscussions();
+            }
+        }
+
+        // إرسال الأفكار
+        function submitIdea() {
+            if (!currentUser) {
+                alert('⚠️ الرجاء تسجيل الدخول أولاً');
+                showLoginModal();
+                return;
+            }
+
+            const ideaInput = document.getElementById('ideaInput');
+            const idea = ideaInput.value.trim();
+            
+            if (!idea) {
+                alert('⚠️ الرجاء كتابة فكرة أولاً');
+                return;
+            }
+
+            saveIdea({
+                text: idea,
+                user: currentUser.name
+            });
+
+            ideaInput.value = '';
+            displayIdeas();
+            alert('✨ شكراً لك! تم إرسال فكرتك بنجاح');
+        }
+
+        // إرسال النقاشات
+        function submitDiscussion() {
+            if (!currentUser) {
+                alert('⚠️ الرجاء تسجيل الدخول أولاً');
+                showLoginModal();
+                return;
+            }
+
+            const discussionInput = document.getElementById('discussionInput');
+            const discussion = discussionInput.value.trim();
+            
+            if (!discussion) {
+                alert('⚠️ الرجاء كتابة نقاش أولاً');
+                return;
+            }
+
+            saveDiscussion({
+                text: discussion,
+                user: currentUser.name
+            });
+
+            discussionInput.value = '';
+            displayDiscussions();
+            alert('💬 تم نشر نقاشك بنجاح');
+        }
+
+        // نظام القراءة والأسئلة
+        let currentStoryId = null;
+
+        function showStoryReading(storyId) {
+            hideAllPages();
             document.getElementById('storyReadingSection').classList.remove('hidden');
-            document.getElementById('questionsSection').classList.add('hidden');
+            
+            const story = stories.find(s => s.id === storyId);
+            currentStoryId = storyId;
+            
+            // تطبيق ثيم القصة
+            setTheme(story.theme, story.title);
+            
+            document.getElementById('storyContent').innerHTML = `
+                <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">${story.title}</h2>
+                <div style="background: var(--secondary-color); padding: 2rem; border-radius: 15px; line-height: 1.8;">
+                    ${story.content}
+                </div>
+            `;
         }
 
         function showQuestions() {
+            hideAllPages();
+            document.getElementById('questionsSection').classList.remove('hidden');
+            
             const story = stories.find(s => s.id === currentStoryId);
             const questionsContainer = document.getElementById('questionsContainer');
-            questionsContainer.innerHTML = '';
             
-            story.questions.forEach((question, index) => {
-                questionsContainer.innerHTML += `
-                    <div class="question">
-                        <h3>${question}</h3>
-                        <textarea placeholder="اكتب إجابتك هنا..." id="answer${index}"></textarea>
-                    </div>
-                `;
-            });
+            questionsContainer.innerHTML = story.questions.map((question, index) => `
+                <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--secondary-color);">
+                    <h3 style="color: var(--text-color); margin-bottom: 1rem;">${question}</h3>
+                    <textarea class="idea-input" id="answer${index}" placeholder="اكتب إجابتك هنا..."></textarea>
+                </div>
+            `).join('');
             
             questionsContainer.innerHTML += `
-                <button class="submit-btn" onclick="submitAnswers()">إرسال الإجابات</button>
+                <button class="submit-idea-btn" onclick="submitAnswers()">إرسال الإجابات</button>
             `;
             
-            displayStoryAnswers(currentStoryId);
+            displayStoryAnswers();
+        }
+
+        function displayStoryAnswers() {
+            const answers = getStoryAnswers(currentStoryId);
+            const answersContainer = document.getElementById('answersContainer');
             
-            document.getElementById('storyReadingSection').classList.add('hidden');
-            document.getElementById('questionsSection').classList.remove('hidden');
+            if (answers.length === 0) {
+                answersContainer.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد أجوبة بعد...</p>';
+                return;
+            }
+
+            answersContainer.innerHTML = answers.map(answer => `
+                <div class="discussion-item">
+                    <div class="discussion-meta">
+                        <span>⏰ ${answer.timestamp}</span>
+                        <span class="user-badge">${answer.user}</span>
+                    </div>
+                    <p>${answer.text}</p>
+                </div>
+            `).join('');
         }
 
         function submitAnswers() {
+            if (!currentUser) {
+                alert('⚠️ الرجاء تسجيل الدخول أولاً');
+                showLoginModal();
+                return;
+            }
+
             const story = stories.find(s => s.id === currentStoryId);
-            const answersContainer = document.getElementById('answersContainer');
-            
             let hasNewAnswers = false;
+
             story.questions.forEach((question, index) => {
                 const answerInput = document.getElementById(`answer${index}`);
                 if (answerInput && answerInput.value.trim()) {
@@ -4576,82 +5064,20 @@ Her pov..
                 }
             });
 
-            displayStoryAnswers(currentStoryId);
-
             if (hasNewAnswers) {
-                const successMsg = document.createElement('div');
-                successMsg.className = 'success-message';
-                successMsg.textContent = '✅ تم حفظ إجاباتك بنجاح!';
-                answersContainer.prepend(successMsg);
-
-                setTimeout(() => {
-                    successMsg.remove();
-                }, 3000);
+                displayStoryAnswers();
+                alert('✅ تم حفظ إجاباتك بنجاح!');
             }
         }
 
-        // إحصائيات الأجوبة
-        function showAnswersStats() {
-            const stats = {};
-            stories.forEach(story => {
-                const answers = getStoryAnswers(story.id);
-                stats[story.title] = {
-                    count: answers.length,
-                    totalLikes: answers.reduce((sum, answer) => sum + answer.likes, 0)
-                };
-            });
-            
-            let statsHTML = '<h3>📊 إحصائيات الأجوبة:</h3>';
-            let totalAnswers = 0;
-            let totalLikes = 0;
-            
-            Object.keys(stats).forEach(storyTitle => {
-                totalAnswers += stats[storyTitle].count;
-                totalLikes += stats[storyTitle].totalLikes;
-                statsHTML += `
-                    <div style="margin: 12px 0; padding: 15px; background: var(--secondary-color); border-radius: 10px; border-right: 4px solid var(--primary-color);">
-                        <strong>${storyTitle}:</strong><br>
-                        📝 ${stats[storyTitle].count} إجابة<br>
-                        ❤️ ${stats[storyTitle].totalLikes} لايك
-                    </div>
-                `;
-            });
-            
-            statsHTML += `
-                <div style="margin: 15px 0; padding: 15px; background: var(--primary-color); color: white; border-radius: 10px; text-align: center;">
-                    <strong>المجموع:</strong><br>
-                    📝 ${totalAnswers} إجابة<br>
-                    ❤️ ${totalLikes} لايك
-                </div>
-            `;
-            
-            alert(statsHTML);
+        // التهيئة
+        function initialize() {
+            updateUserSection();
+            showHomePage();
         }
 
-        // Initialize the page
-        let currentStoryId = null;
-
-        function initializePage() {
-            // تطبيق الثيم الأساسي
-            setTheme('', '');
-            
-            // Generate story cards
-            const storiesGrid = document.getElementById('storiesSection');
-            storiesGrid.innerHTML = '';
-            
-            stories.forEach(story => {
-                storiesGrid.innerHTML += `
-                    <div class="story-card" onclick="showStoryReading(${story.id})">
-                        <span class="category">${story.category}</span>
-                        <h3>${story.title}</h3>
-                        <p class="description">${story.description}</p>
-                    </div>
-                `;
-            });
-        }
-
-        // Start the application
-        initializePage();
+        // بدء التطبيق
+        initialize();
     </script>
 </body>
 </html>
