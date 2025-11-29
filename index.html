@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>موقع رواياتي</title>
 
-    <!-- Firebase CDN (Compat) -->
+    <!-- Firebase CDN (App + Firestore فقط) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <style>
@@ -96,40 +95,10 @@
         .user-section {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            color: white;
-        }
-
-        .login-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn:hover {
-            background: white;
-            color: var(--primary-color);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
             gap: 0.5rem;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
 
         /* Main Container */
@@ -236,6 +205,23 @@
             padding: 2rem;
             border-radius: 15px;
             margin-bottom: 2rem;
+        }
+
+        .idea-form .small-label {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1.5px solid var(--primary-color);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 0.95rem;
         }
 
         .idea-input, .discussion-input {
@@ -397,10 +383,6 @@
             color: var(--text-color);
         }
 
-        .like-btn.liked {
-            color: #e74c3c;
-        }
-
         .like-btn:hover, .reply-btn:hover {
             background: rgba(0,0,0,0.1);
         }
@@ -440,81 +422,15 @@
             color: var(--text-color);
         }
 
-        /* Login Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .reply-name-input {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .login-modal {
-            background: var(--card-bg);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            width: 90%;
-            max-width: 400px;
-        }
-
-        .login-modal h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-color);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--primary-color);
+            padding: 0.6rem;
+            border: 1px solid var(--primary-color);
             border-radius: 8px;
-            background: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            background: var(--card-bg);
             color: var(--text-color);
-            font-size: 1rem;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-color);
-        }
-
-        .remember-me input {
-            width: auto;
-        }
-
-        .submit-login-btn {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .submit-login-btn:hover {
-            transform: scale(1.05);
+            font-size: 0.9rem;
         }
 
         /* Hidden Class */
@@ -549,6 +465,29 @@
             line-height: 1.8;
             border: 2px solid var(--primary-color);
         }
+
+        /* Questions name input */
+        .answers-name-box {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+        }
+
+        .answers-name-box label {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .answers-name-box input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1.5px solid var(--primary-color);
+            background: var(--card-bg);
+        }
     </style>
 </head>
 <body>
@@ -562,43 +501,20 @@
                 <li><a href="#" onclick="showCafePage()">مقهى الحوار</a></li>
             </ul>
             <div class="user-section" id="userSection">
-                <button class="login-btn" onclick="showLoginModal()">تسجيل الدخول</button>
             </div>
         </div>
     </nav>
-
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal-overlay hidden">
-        <div class="login-modal">
-            <h2>تسجيل الدخول</h2>
-            <form onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label>اسم المستخدم:</label>
-                    <input type="text" id="loginName" required>
-                </div>
-                <div class="form-group">
-                    <label>كلمة السر:</label>
-                    <input type="password" id="loginPassword" required>
-                </div>
-                <div class="remember-me">
-                    <input type="checkbox" id="rememberMe">
-                    <label for="rememberMe">تذكرني</label>
-                </div>
-                <button type="submit" class="submit-login-btn">دخول</button>
-            </form>
-        </div>
-    </div>
 
     <!-- Home Page -->
     <div id="homePage" class="container">
         <header class="main-header">
             <h1>مرحباً بكم في مكتبة القصص</h1>
-            <div class="theme-indicator" id="themeIndicator"></div>
+            <div class="theme-indicator" id="themeIndicator">🩵</div>
         </header>
 
         <!-- Story of the Day -->
         <div class="story-of-day" id="storyOfDay" onclick="openDailyStory()">
-            <button class="reset-daily-btn" onclick="resetDailyStory(event)">🔄 تجربة</button>
+            <button class="reset-daily-btn" onclick="resetDailyStory(event)">🔄 تجربة قصة جديدة</button>
             <div class="daily-badge">قصة اليوم</div>
             <h2 id="dailyStoryTitle">...</h2>
             <p id="dailyStoryDesc">جاري تحميل قصة اليوم...</p>
@@ -608,10 +524,14 @@
         <section class="ideas-section">
             <h2>💡 صندوق الاقتراحات</h2>
             <div class="idea-form">
+                <div class="small-label">اسمك (اختياري):</div>
+                <input type="text" id="ideaName" class="name-input" placeholder="مثال: قارئة مجهولة، زائر من تويتر...">
                 <textarea class="idea-input" id="ideaInput" placeholder="ما الفكرة التي تود أن تراها في القصة القادمة؟ اكتب اقتراحك هنا..."></textarea>
                 <button class="submit-idea-btn" onclick="submitIdea()">إرسال الفكرة ✨</button>
             </div>
-            <div class="discussions-list" id="ideasList"></div>
+            <div class="discussions-list" id="ideasList">
+                <!-- Ideas will be displayed here -->
+            </div>
         </section>
     </div>
 
@@ -619,7 +539,9 @@
     <div id="storiesPage" class="container hidden">
         <button class="back-button" onclick="showHomePage()">← العودة للرئيسية</button>
         <h1 style="text-align: center; color: var(--primary-color); margin-bottom: 3rem;">مكتبة القصص</h1>
-        <div class="stories-grid" id="storiesGrid"></div>
+        <div class="stories-grid" id="storiesGrid">
+            <!-- All stories will be displayed here -->
+        </div>
     </div>
 
     <!-- Cafe Page -->
@@ -628,17 +550,23 @@
         <section class="cafe-section">
             <h2>☕ مقهى الحوار</h2>
             <div class="discussion-form">
+                <div class="small-label">اسمك (اختياري):</div>
+                <input type="text" id="discussionName" class="name-input" placeholder="مثال: شخص غريب، صديقة خجولة...">
                 <textarea class="discussion-input" id="discussionInput" placeholder="ماذا تود أن تناقش مع زوار الموقع؟"></textarea>
                 <button class="submit-idea-btn" onclick="submitDiscussion()">نشر النقاش 💬</button>
             </div>
-            <div class="discussions-list" id="discussionsList"></div>
+            <div class="discussions-list" id="discussionsList">
+                <!-- Discussions will be displayed here -->
+            </div>
         </section>
     </div>
 
     <!-- Story Reading Section -->
     <section id="storyReadingSection" class="container hidden">
         <button class="back-button" onclick="showStoriesPage()">← العودة للمكتبة</button>
-        <div class="story-reading" id="storyContent"></div>
+        <div class="story-reading" id="storyContent">
+            <!-- Story content will be loaded here -->
+        </div>
         <button class="submit-idea-btn" onclick="showQuestions()" style="margin-top: 2rem;">أكملت القراءة 💭</button>
     </section>
 
@@ -647,8 +575,16 @@
         <button class="back-button" onclick="showStoryReading(currentStoryId)">← العودة للقصة</button>
         <div class="ideas-section">
             <h2>💭 فكر فيها...</h2>
-            <div id="questionsContainer"></div>
-            <div class="discussions-list" id="answersContainer"></div>
+            <div class="answers-name-box">
+                <label for="answersName">اسمك في الإجابات (اختياري):</label>
+                <input type="text" id="answersName" placeholder="اكتبه مرة واحدة لكل الأجوبة، أو اتركه فارغاً ليظهر (مجهول)">
+            </div>
+            <div id="questionsContainer">
+                <!-- Questions will be loaded here -->
+            </div>
+            <div class="discussions-list" id="answersContainer">
+                <!-- Answers will be displayed here -->
+            </div>
         </div>
     </section>
 
@@ -665,7 +601,6 @@
         };
 
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
         const db = firebase.firestore();
         const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
 
@@ -721,18 +656,8 @@
             }
         ];
 
-        // ========== حالة المستخدم ==========
-        let currentUser = null;
         let currentStoryId = null;
 
-        function getUserName() {
-            if (!currentUser) return "زائر";
-            if (currentUser.displayName) return currentUser.displayName;
-            if (currentUser.email) return currentUser.email.split("@")[0];
-            return "مستخدم";
-        }
-
-        // ========== الثيمات ==========
         function setTheme(themeClass, storyTitle = '') {
             document.body.className = themeClass || '';
             const themeNames = {
@@ -746,7 +671,7 @@
             if (storyTitle && themeClass && themeNames[themeClass]) {
                 indicator.textContent = `ثيم ${themeNames[themeClass]} - ${storyTitle}`;
             } else {
-                indicator.textContent = '';
+                indicator.textContent = 'ثيم أزرق باستيل هادي 🩵';
             }
         }
 
@@ -809,110 +734,7 @@
             alert('🔄 تم إعادة تعيين قصة اليوم - جربي تضغطين على قصة اليوم مرة ثانية!');
         }
 
-        // ========== Login Modal ==========
-        function showLoginModal() {
-            document.getElementById('loginModal').classList.remove('hidden');
-        }
-
-        function hideLoginModal() {
-            document.getElementById('loginModal').classList.add('hidden');
-        }
-
-        // ========== Auth + Username→Email ==========
-        async function handleLogin(event) {
-            event.preventDefault();
-            const name = document.getElementById('loginName').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
-
-            if (!name || !password) {
-                alert("⚠️ الرجاء إدخال اسم المستخدم وكلمة السر");
-                return;
-            }
-
-            // نحوله لإيميل داخلي مقبول عند Firebase
-            const localPart = name.replace(/\s+/g, '').toLowerCase() || "user";
-            const email = localPart + "@stories-users.com";
-
-            console.log("Trying login with email:", email);
-
-            try {
-                await auth.setPersistence(
-                    rememberMe
-                        ? firebase.auth.Auth.Persistence.LOCAL
-                        : firebase.auth.Auth.Persistence.SESSION
-                );
-
-                let cred = null;
-
-                try {
-                    // نحاول تسجيل الدخول
-                    cred = await auth.signInWithEmailAndPassword(email, password);
-                } catch (err) {
-                    if (err.code === "auth/user-not-found") {
-                        // إنشاء مستخدم جديد
-                        cred = await auth.createUserWithEmailAndPassword(email, password);
-                        await db.collection("users").doc(cred.user.uid).set({
-                            name,
-                            email,
-                            createdAt: serverTimestamp()
-                        });
-                    } else if (err.code === "auth/wrong-password") {
-                        alert("❌ كلمة السر غير صحيحة لهذا الاسم.");
-                        return;
-                    } else {
-                        console.error(err);
-                        alert("حدث خطأ أثناء تسجيل الدخول: " + err.message);
-                        return;
-                    }
-                }
-
-                if (cred && cred.user && !cred.user.displayName) {
-                    await cred.user.updateProfile({ displayName: name });
-                }
-
-                document.getElementById('loginName').value = '';
-                document.getElementById('loginPassword').value = '';
-                document.getElementById('rememberMe').checked = false;
-                hideLoginModal();
-            } catch (e) {
-                console.error(e);
-                alert("تعذر إكمال تسجيل الدخول: " + e.message);
-            }
-        }
-
-        function logout() {
-            auth.signOut();
-        }
-
-        function updateUserSection() {
-            const userSection = document.getElementById('userSection');
-            if (currentUser) {
-                const name = getUserName();
-                userSection.innerHTML = `
-                    <div class="user-info">
-                        <div class="user-avatar">${name.charAt(0)}</div>
-                        <span>مرحباً، ${name}</span>
-                        <button class="login-btn" onclick="logout()" style="margin-right: 0.5rem;">تسجيل الخروج</button>
-                    </div>
-                `;
-            } else {
-                userSection.innerHTML = '<button class="login-btn" onclick="showLoginModal()">تسجيل الدخول</button>';
-            }
-        }
-
-        auth.onAuthStateChanged(user => {
-            currentUser = user;
-            console.log("Auth state changed:", user);
-            updateUserSection();
-            displayIdeas();
-            displayDiscussions();
-            if (currentStoryId) {
-                displayStoryAnswers();
-            }
-        });
-
-        // ========== Firestore – أفكار ==========
+        // ========== أفكار (ideas) ==========
         async function getIdeasFromDB() {
             const snapshot = await db.collection("ideas")
                 .orderBy("createdAt", "desc")
@@ -923,7 +745,7 @@
                 return {
                     id: doc.id,
                     text: data.text,
-                    userName: data.userName || "مستخدم",
+                    userName: data.userName || "مجهول",
                     timestamp: data.createdAt
                         ? data.createdAt.toDate().toLocaleString('ar-SA')
                         : ''
@@ -931,11 +753,10 @@
             });
         }
 
-        async function saveIdeaToDB(text) {
+        async function saveIdeaToDB(text, userName) {
             await db.collection("ideas").add({
                 text,
-                userName: getUserName(),
-                userId: currentUser ? currentUser.uid : null,
+                userName,
                 createdAt: serverTimestamp()
             });
         }
@@ -964,22 +785,21 @@
         }
 
         async function submitIdea() {
-            if (!currentUser) {
-                alert('⚠️ الرجاء تسجيل الدخول أولاً');
-                showLoginModal();
-                return;
-            }
-
+            const ideaNameInput = document.getElementById('ideaName');
             const ideaInput = document.getElementById('ideaInput');
+
+            const name = ideaNameInput.value.trim() || "مجهول";
             const idea = ideaInput.value.trim();
+
             if (!idea) {
                 alert('⚠️ الرجاء كتابة فكرة أولاً');
                 return;
             }
 
             try {
-                await saveIdeaToDB(idea);
+                await saveIdeaToDB(idea, name);
                 ideaInput.value = '';
+                // نخلي الاسم كما هو لو حابة تكرر
                 await displayIdeas();
                 alert('✨ شكراً لك! تم إرسال فكرتك بنجاح');
             } catch (e) {
@@ -988,7 +808,7 @@
             }
         }
 
-        // ========== Firestore – النقاشات ==========
+        // ========== النقاشات (discussions) ==========
         async function getDiscussionsFromDB() {
             const snapshot = await db.collection("discussions")
                 .orderBy("createdAt", "desc")
@@ -1002,21 +822,19 @@
                 return {
                     id: doc.id,
                     text: data.text,
-                    userName: data.userName || "مستخدم",
-                    userId: data.userId || null,
-                    likes: Array.isArray(data.likes) ? data.likes : [],
+                    userName: data.userName || "مجهول",
+                    likeCount: typeof data.likeCount === "number" ? data.likeCount : 0,
                     replies: Array.isArray(data.replies) ? data.replies : [],
                     timestamp
                 };
             });
         }
 
-        async function saveDiscussionToDB(text) {
+        async function saveDiscussionToDB(text, userName) {
             await db.collection("discussions").add({
                 text,
-                userName: getUserName(),
-                userId: currentUser ? currentUser.uid : null,
-                likes: [],
+                userName,
+                likeCount: 0,
                 replies: [],
                 createdAt: serverTimestamp()
             });
@@ -1031,9 +849,7 @@
                     return;
                 }
 
-                discussionsList.innerHTML = discussions.map(discussion => {
-                    const isLiked = currentUser && discussion.likes.includes(currentUser.uid);
-                    return `
+                discussionsList.innerHTML = discussions.map(discussion => `
                     <div class="discussion-item">
                         <div class="discussion-meta">
                             <span>⏰ ${discussion.timestamp}</span>
@@ -1042,8 +858,8 @@
                         <p>${discussion.text}</p>
 
                         <div class="discussion-actions">
-                            <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="handleLike('${discussion.id}')">
-                                ❤️ ${discussion.likes.length}
+                            <button class="like-btn" onclick="handleLike('${discussion.id}', ${discussion.likeCount})">
+                                ❤️ ${discussion.likeCount}
                             </button>
                             <button class="reply-btn" onclick="toggleReplyForm('${discussion.id}')">
                                 💬 رد
@@ -1051,6 +867,7 @@
                         </div>
 
                         <div class="reply-form" id="replyForm-${discussion.id}">
+                            <input class="reply-name-input" id="replyName-${discussion.id}" placeholder="اسمك (اختياري)">
                             <textarea class="reply-input" id="replyInput-${discussion.id}" placeholder="اكتب ردك..."></textarea>
                             <button class="submit-idea-btn" onclick="submitReply('${discussion.id}')" style="padding: 0.5rem 1rem; font-size: 0.9rem;">إرسال الرد</button>
                         </div>
@@ -1061,15 +878,14 @@
                                 <div class="reply-item">
                                     <div class="discussion-meta">
                                         <span>⏰ ${reply.timestamp || ''}</span>
-                                        <span class="user-badge">${reply.userName || 'مستخدم'}</span>
+                                        <span class="user-badge">${reply.userName || 'مجهول'}</span>
                                     </div>
                                     <p>${reply.text}</p>
                                 </div>
                             `).join('')}
                         </div>` : ''}
                     </div>
-                    `;
-                }).join('');
+                `).join('');
             } catch (e) {
                 console.error(e);
                 discussionsList.innerHTML = '<p style="text-align: center; opacity: 0.6;">حدث خطأ في تحميل النقاشات...</p>';
@@ -1077,21 +893,19 @@
         }
 
         async function submitDiscussion() {
-            if (!currentUser) {
-                alert('⚠️ الرجاء تسجيل الدخول أولاً');
-                showLoginModal();
-                return;
-            }
-
+            const discussionNameInput = document.getElementById('discussionName');
             const discussionInput = document.getElementById('discussionInput');
+
+            const name = discussionNameInput.value.trim() || "مجهول";
             const text = discussionInput.value.trim();
+
             if (!text) {
                 alert('⚠️ الرجاء كتابة نقاش أولاً');
                 return;
             }
 
             try {
-                await saveDiscussionToDB(text);
+                await saveDiscussionToDB(text, name);
                 discussionInput.value = '';
                 await displayDiscussions();
                 alert('💬 تم نشر نقاشك بنجاح');
@@ -1102,21 +916,17 @@
         }
 
         function toggleReplyForm(discussionId) {
-            if (!currentUser) {
-                showLoginModal();
-                return;
-            }
             const replyForm = document.getElementById(`replyForm-${discussionId}`);
             replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
         }
 
         async function submitReply(discussionId) {
-            if (!currentUser) {
-                showLoginModal();
-                return;
-            }
+            const replyNameInput = document.getElementById(`replyName-${discussionId}`);
             const replyInput = document.getElementById(`replyInput-${discussionId}`);
+
+            const name = replyNameInput.value.trim() || "مجهول";
             const replyText = replyInput.value.trim();
+
             if (!replyText) {
                 alert('⚠️ الرجاء كتابة رد أولاً');
                 return;
@@ -1131,13 +941,13 @@
                 const replies = Array.isArray(data.replies) ? data.replies : [];
                 replies.unshift({
                     text: replyText,
-                    userName: getUserName(),
-                    userId: currentUser.uid,
+                    userName: name,
                     timestamp: new Date().toLocaleString('ar-SA')
                 });
 
                 await docRef.update({ replies });
                 replyInput.value = '';
+                // نخلي الاسم كما هو
                 document.getElementById(`replyForm-${discussionId}`).style.display = 'none';
                 await displayDiscussions();
             } catch (e) {
@@ -1146,28 +956,12 @@
             }
         }
 
-        async function handleLike(discussionId) {
-            if (!currentUser) {
-                showLoginModal();
-                return;
-            }
-
+        async function handleLike(discussionId, currentLikeCount) {
             try {
                 const docRef = db.collection("discussions").doc(discussionId);
-                const docSnap = await docRef.get();
-                if (!docSnap.exists) return;
-
-                const data = docSnap.data();
-                const likes = Array.isArray(data.likes) ? data.likes : [];
-                const index = likes.indexOf(currentUser.uid);
-
-                if (index > -1) {
-                    likes.splice(index, 1);
-                } else {
-                    likes.push(currentUser.uid);
-                }
-
-                await docRef.update({ likes });
+                await docRef.update({
+                    likeCount: (currentLikeCount || 0) + 1
+                });
                 await displayDiscussions();
             } catch (e) {
                 console.error(e);
@@ -1181,6 +975,8 @@
             document.getElementById('storyReadingSection').classList.remove('hidden');
 
             const story = stories.find(s => s.id === storyId);
+            if (!story) return;
+
             currentStoryId = storyId;
 
             setTheme(story.theme, story.title);
@@ -1198,6 +994,8 @@
             document.getElementById('questionsSection').classList.remove('hidden');
 
             const story = stories.find(s => s.id === currentStoryId);
+            if (!story) return;
+
             const questionsContainer = document.getElementById('questionsContainer');
 
             questionsContainer.innerHTML = story.questions.map((question, index) => `
@@ -1236,7 +1034,7 @@
                     const data = doc.data();
                     return {
                         text: data.text,
-                        userName: data.userName || "مستخدم",
+                        userName: data.userName || "مجهول",
                         timestamp: data.createdAt
                             ? data.createdAt.toDate().toLocaleString('ar-SA')
                             : ''
@@ -1259,13 +1057,17 @@
         }
 
         async function submitAnswers() {
-            if (!currentUser) {
-                alert('⚠️ الرجاء تسجيل الدخول أولاً');
-                showLoginModal();
+            if (!currentStoryId) {
+                alert('لا توجد قصة محددة.');
                 return;
             }
 
             const story = stories.find(s => s.id === currentStoryId);
+            if (!story) return;
+
+            const nameInput = document.getElementById('answersName');
+            const userName = nameInput.value.trim() || "مجهول";
+
             let hasNew = false;
 
             try {
@@ -1277,8 +1079,7 @@
                             storyId: currentStoryId,
                             questionIndex: i,
                             text,
-                            userName: getUserName(),
-                            userId: currentUser.uid,
+                            userName,
                             createdAt: serverTimestamp()
                         });
                         answerInput.value = '';
@@ -1289,6 +1090,8 @@
                 if (hasNew) {
                     await displayStoryAnswers();
                     alert('✅ تم حفظ إجاباتك بنجاح!');
+                } else {
+                    alert('⚠️ لم تقم بكتابة أي إجابة.');
                 }
             } catch (e) {
                 console.error(e);
