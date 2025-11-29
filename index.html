@@ -829,92 +829,62 @@
         function hideLoginModal() {
             document.getElementById('loginModal').classList.add('hidden');
         }
+async function handleLogin(event) {
+    event.preventDefault();
+    const name = document.getElementById('loginName').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const rememberMe = document.getElementById('rememberMe').checked;
 
-        async function handleLogin(event) {
-            event.preventDefault();
-            const name = document.getElementById('loginName').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
+    if (!name || !password) {
+        alert("⚠️ الرجاء إدخال اسم المستخدم وكلمة السر");
+        return;
+    }
 
-            if (!name || !password) {
-                alert("⚠️ الرجاء إدخال اسم المستخدم وكلمة السر");
+    // 👈 تعديل مهم: استخدام دومين يقبله Firebase
+    const email = (name.replace(/\s+/g, '').toLowerCase() || "user") + "@stories.com";
+
+    try {
+        await auth.setPersistence(
+            rememberMe
+                ? firebase.auth.Auth.Persistence.LOCAL
+                : firebase.auth.Auth.Persistence.SESSION
+        );
+
+        try {
+            // تسجيل الدخول
+            const cred = await auth.signInWithEmailAndPassword(email, password);
+            if (!cred.user.displayName) {
+                await cred.user.updateProfile({ displayName: name });
+            }
+        } catch (err) {
+            if (err.code === "auth/user-not-found") {
+                // إنشاء مستخدم جديد
+                const cred = await auth.createUserWithEmailAndPassword(email, password);
+                await cred.user.updateProfile({ displayName: name });
+                await db.collection("users").doc(cred.user.uid).set({
+                    name,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } else if (err.code === "auth/wrong-password") {
+                alert("❌ كلمة السر غير صحيحة لهذا الاسم.");
+                return;
+            } else {
+                console.error(err);
+                alert("حدث خطأ أثناء تسجيل الدخول.");
                 return;
             }
-
-            const email = (name.replace(/\s+/g, '').toLowerCase() || "user") + "@mystories.local";
-
-            try {
-                await auth.setPersistence(
-                    rememberMe
-                        ? firebase.auth.Auth.Persistence.LOCAL
-                        : firebase.auth.Auth.Persistence.SESSION
-                );
-
-                try {
-                    // حاول تسجيل الدخول أولاً
-                    const cred = await auth.signInWithEmailAndPassword(email, password);
-                    if (!cred.user.displayName) {
-                        await cred.user.updateProfile({ displayName: name });
-                    }
-                } catch (err) {
-                    if (err.code === "auth/user-not-found") {
-                        // أنشئ مستخدم جديد
-                        const cred = await auth.createUserWithEmailAndPassword(email, password);
-                        await cred.user.updateProfile({ displayName: name });
-                        await db.collection("users").doc(cred.user.uid).set({
-                            name,
-                            createdAt: serverTimestamp()
-                        });
-                    } else if (err.code === "auth/wrong-password") {
-                        alert("❌ كلمة السر غير صحيحة لهذا الاسم.");
-                        return;
-                    } else {
-                        console.error(err);
-                        alert("حدث خطأ أثناء تسجيل الدخول.");
-                        return;
-                    }
-                }
-
-                document.getElementById('loginName').value = '';
-                document.getElementById('loginPassword').value = '';
-                document.getElementById('rememberMe').checked = false;
-                hideLoginModal();
-            } catch (e) {
-                console.error(e);
-                alert("تعذر إكمال تسجيل الدخول.");
-            }
         }
 
-        function logout() {
-            auth.signOut();
-        }
+        document.getElementById('loginName').value = '';
+        document.getElementById('loginPassword').value = '';
+        document.getElementById('rememberMe').checked = false;
+        hideLoginModal();
+    } catch (e) {
+        console.error(e);
+        alert("تعذر إكمال تسجيل الدخول.");
+    }
+}
 
-        function updateUserSection() {
-            const userSection = document.getElementById('userSection');
-            if (currentUser) {
-                const name = getUserName();
-                userSection.innerHTML = `
-                    <div class="user-info">
-                        <div class="user-avatar">${name.charAt(0)}</div>
-                        <span>مرحباً، ${name}</span>
-                        <button class="login-btn" onclick="logout()" style="margin-right: 0.5rem;">تسجيل الخروج</button>
-                    </div>
-                `;
-            } else {
-                userSection.innerHTML = '<button class="login-btn" onclick="showLoginModal()">تسجيل الدخول</button>';
-            }
-        }
-
-        auth.onAuthStateChanged(user => {
-            currentUser = user;
-            updateUserSection();
-            // إعادة تحميل القوائم بحيث تبين الأسماء بشكل صحيح
-            displayIdeas();
-            displayDiscussions();
-            if (currentStoryId) {
-                displayStoryAnswers();
-            }
-        });
 
         // ========== Firestore – أفكار ==========
         async function getIdeasFromDB() {
@@ -1351,3 +1321,4 @@
     </script>
 </body>
 </html>
+
