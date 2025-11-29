@@ -841,7 +841,8 @@ async function handleLogin(event) {
     }
 
     // 👈 تعديل مهم: استخدام دومين يقبله Firebase
-    const email = (name.replace(/\s+/g, '').toLowerCase() || "user") + "@stories.com";
+    const email = (name.replace(/\s+/g, '').toLowerCase() || "user") + "@my-stories-site.firebaseapp.com";
+
 
     try {
         await auth.setPersistence(
@@ -1321,4 +1322,5 @@ async function handleLogin(event) {
     </script>
 </body>
 </html>
+
 
