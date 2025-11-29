@@ -169,6 +169,7 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.3s ease;
+            position: relative;
         }
 
         .story-of-day:hover {
@@ -187,6 +188,25 @@
             font-size: 0.9rem;
             display: inline-block;
             margin-bottom: 1rem;
+        }
+
+        .reset-daily-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .reset-daily-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
         }
 
         /* Ideas Section */
@@ -555,11 +575,12 @@
     <div id="homePage" class="container">
         <header class="main-header">
             <h1>مرحباً بكم في مكتبة القصص</h1>
-            <div class="theme-indicator" id="themeIndicator"></div>
+            <div class="theme-indicator" id="themeIndicator">الثيم الأساسي - أزرق هادي</div>
         </header>
 
         <!-- Story of the Day -->
         <div class="story-of-day" id="storyOfDay" onclick="openDailyStory()">
+            <button class="reset-daily-btn" onclick="resetDailyStory(event)">🔄 تجربة</button>
             <div class="daily-badge">قصة اليوم</div>
             <h2 id="dailyStoryTitle">...</h2>
             <p id="dailyStoryDesc">جاري تحميل قصة اليوم...</p>
@@ -4700,8 +4721,75 @@ Her pov..
             if (storyTitle) {
                 indicator.textContent = `ثيم ${themeNames[themeClass]} - ${storyTitle}`;
             } else {
-                indicator.textContent = '';
+                indicator.textContent = 'الثيم الأساسي - أزرق هادي';
             }
+        }
+
+        // قصة اليوم - النسخة المصححة
+        function getDailyStory() {
+            const today = new Date().toDateString();
+            const saved = localStorage.getItem('daily_story');
+            
+            // إذا يوجد قصة محفوظة لهذا اليوم، استخدمها
+            if (saved) {
+                try {
+                    const { date, storyId } = JSON.parse(saved);
+                    if (date === today) {
+                        const story = stories.find(s => s.id === storyId);
+                        if (story) {
+                            return story;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error parsing saved story:', error);
+                }
+            }
+            
+            // إذا لا توجد قصة لهذا اليوم، اختر قصة عشوائية جديدة
+            const availableStories = stories.filter(story => story.id);
+            if (availableStories.length === 0) {
+                return null;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * availableStories.length);
+            const randomStory = availableStories[randomIndex];
+            
+            // احفظ القصة الجديدة لهذا اليوم
+            localStorage.setItem('daily_story', JSON.stringify({
+                date: today,
+                storyId: randomStory.id,
+                timestamp: new Date().getTime()
+            }));
+            
+            return randomStory;
+        }
+
+        function displayDailyStory() {
+            const dailyStory = getDailyStory();
+            if (dailyStory) {
+                document.getElementById('dailyStoryTitle').textContent = dailyStory.title;
+                document.getElementById('dailyStoryDesc').textContent = dailyStory.description;
+            } else {
+                document.getElementById('dailyStoryTitle').textContent = 'لا توجد قصة اليوم';
+                document.getElementById('dailyStoryDesc').textContent = 'جاري تحميل القصص...';
+            }
+        }
+
+        function openDailyStory() {
+            const dailyStory = getDailyStory();
+            if (dailyStory) {
+                showStoryReading(dailyStory.id);
+            } else {
+                alert('⚠️ لا توجد قصة متاحة اليوم');
+            }
+        }
+
+        // دالة مساعدة لإعادة تعيين قصة اليوم (للتجربة)
+        function resetDailyStory(event) {
+            event.stopPropagation(); // منع فتح القصة عند الضغط على الزر
+            localStorage.removeItem('daily_story');
+            displayDailyStory();
+            alert('🔄 تم إعادة تعيين قصة اليوم - جرب تضغط على قصة اليوم مرة أخرى!');
         }
 
         // تسجيل الدخول
@@ -4779,38 +4867,6 @@ Her pov..
             document.getElementById('cafePage').classList.add('hidden');
             document.getElementById('storyReadingSection').classList.add('hidden');
             document.getElementById('questionsSection').classList.add('hidden');
-        }
-
-        // قصة اليوم
-        function getDailyStory() {
-            const today = new Date().toDateString();
-            const saved = localStorage.getItem('daily_story');
-            
-            if (saved) {
-                const { date, storyId } = JSON.parse(saved);
-                if (date === today) {
-                    return stories.find(s => s.id === storyId);
-                }
-            }
-            
-            const randomStory = stories[Math.floor(Math.random() * stories.length)];
-            localStorage.setItem('daily_story', JSON.stringify({
-                date: today,
-                storyId: randomStory.id
-            }));
-            
-            return randomStory;
-        }
-
-        function displayDailyStory() {
-            const dailyStory = getDailyStory();
-            document.getElementById('dailyStoryTitle').textContent = dailyStory.title;
-            document.getElementById('dailyStoryDesc').textContent = dailyStory.description;
-        }
-
-        function openDailyStory() {
-            const dailyStory = getDailyStory();
-            showStoryReading(dailyStory.id);
         }
 
         // عرض جميع القصص
