@@ -845,11 +845,13 @@ async function handleLogin(event) {
 
 
     try {
-        await auth.setPersistence(
-            rememberMe
-                ? firebase.auth.Auth.Persistence.LOCAL
-                : firebase.auth.Auth.Persistence.SESSION
-        );
+await firebase.auth().setPersistence(
+    rememberMe
+        ? firebase.auth.Auth.Persistence.LOCAL
+        : firebase.auth.Auth.Persistence.SESSION
+);
+
+
 
         try {
             // تسجيل الدخول
@@ -1322,5 +1324,6 @@ async function handleLogin(event) {
     </script>
 </body>
 </html>
+
 
 
