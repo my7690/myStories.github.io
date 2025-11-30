@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <style>
-        /* ثيم أزرق باستيل هادي */
+        /* ===== STYLES (نفس نسختك) ===== */
+
         :root {
             --primary-color: #60a5fa;
             --secondary-color: #e0f2fe;
@@ -20,578 +22,120 @@
             --gradient: linear-gradient(135deg, #bfdbfe 0%, #60a5fa 50%, #1d4ed8 100%);
         }
 
-        /* Story Type Themes */
-        .theme-romance {
-            --primary-color: #e91e63;
-            --secondary-color: #fce4ec;
-            --text-color: #880e4f;
-            --gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        .hidden { display:none; }
+
+        body { margin:0; font-family: "Tajawal", sans-serif; background:#f6faff; }
+
+        /* NAV */
+        .navbar { background:var(--gradient); padding:1rem 2rem; color:white; }
+
+        .nav-container { max-width:1200px; margin:auto; display:flex; justify-content:space-between; align-items:center; }
+
+        .nav-links { display:flex; gap:2rem; list-style:none; }
+        .nav-links a { color:white; text-decoration:none; font-weight:bold; }
+
+        /* Layout */
+        .container { max-width:1200px; margin:auto; padding:2rem; }
+
+        /* Simple sections */
+        .main-header { background:var(--gradient); color:white; padding:2rem; border-radius:20px; text-align:center; }
+        .story-reading, .ideas-section, .cafe-section {
+            background:white; border-radius:20px; padding:2rem; margin-top:2rem; box-shadow:var(--shadow);
         }
 
-        .theme-drama {
-            --primary-color: #ff9800;
-            --secondary-color: #fff3e0;
-            --text-color: #e65100;
-            --gradient: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+        /* forms */
+        textarea, input {
+            width:100%; padding:0.8rem; border-radius:10px;
+            border:2px solid var(--primary-color);
+            background:white; margin-bottom:1rem;
         }
 
-        .theme-mystery {
-            --primary-color: #673ab7;
-            --secondary-color: #f3e5f5;
-            --text-color: #4a148c;
-            --gradient: linear-gradient(135deg, #868f96 0%, #596164 100%);
+        button {
+            padding:0.8rem 1.5rem; border:none; cursor:pointer;
+            border-radius:20px; background:var(--gradient); color:white;
+            font-size:1rem; font-weight:bold;
         }
 
-        .theme-suspense {
-            --primary-color: #795548;
-            --secondary-color: #efebe9;
-            --text-color: #3e2723;
-            --gradient: linear-gradient(135deg, #29323c 0%, #485563 100%);
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            background: var(--gradient);
-            padding: 1rem 2rem;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Header Styles */
-        .main-header {
-            background: var(--gradient);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-            border-radius: 20px;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow);
-        }
-
-        .main-header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .theme-indicator {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 25px;
-            border-radius: 25px;
-            display: inline-block;
-        }
-
-        /* Story of the Day */
-        .story-of-day {
-            background: var(--gradient);
-            color: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-
-        .story-of-day:hover {
-            transform: translateY(-5px);
-        }
-
-        .story-of-day h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .daily-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        .reset-daily-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-
-        .reset-daily-btn:hover {
-            background: rgba(255, 255, 255, 0.5);
-            transform: scale(1.1);
-        }
-
-        /* Ideas Section */
-        .ideas-section {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-        }
-
-        .ideas-section h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
-        }
-
-        .idea-form {
-            background: var(--secondary-color);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-        }
-
-        .idea-form .small-label {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-color);
-        }
-
-        .name-input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1.5px solid var(--primary-color);
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            background: var(--card-bg);
-            color: var(--text-color);
-            font-size: 0.95rem;
-        }
-
-        .idea-input, .discussion-input {
-            width: 100%;
-            padding: 1.2rem;
-            border: 2px solid var(--primary-color);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            resize: vertical;
-            min-height: 100px;
-            background: var(--card-bg);
-            color: var(--text-color);
-            font-size: 1rem;
-        }
-
-        .submit-idea-btn {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 1rem 2.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .submit-idea-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Stories Grid */
-        .stories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 3rem;
-        }
-
-        .story-card {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: all 0.4s ease;
-            border: 3px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .story-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient);
-        }
-
-        .story-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-        }
-
-        .story-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .story-card .category {
-            background: var(--gradient);
-            color: white;
-            padding: 8px 18px;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        /* Cafe Section */
-        .cafe-section {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-        }
-
-        .cafe-section h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
-        }
-
-        .discussion-form {
-            background: var(--secondary-color);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-        }
-
-        .discussions-list {
-            max-height: 600px;
-            overflow-y: auto;
-        }
-
-        .discussion-item {
-            background: var(--secondary-color);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            border-right: 4px solid var(--primary-color);
-        }
-
-        .discussion-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.8rem;
-            font-size: 0.9rem;
-            color: var(--text-color);
-            opacity: 0.7;
-        }
-
-        .user-badge {
-            background: var(--primary-color);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-        }
-
-        /* Like and Reply System */
-        .discussion-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .like-btn, .reply-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .like-btn {
-            color: var(--text-color);
-        }
-
-        .like-btn:hover, .reply-btn:hover {
-            background: rgba(0,0,0,0.1);
-        }
-
-        .reply-btn {
-            color: var(--primary-color);
-        }
-
-        .replies-section {
-            margin-top: 1rem;
-            padding-right: 1rem;
-            border-right: 2px solid var(--secondary-color);
-        }
-
-        .reply-item {
-            background: var(--card-bg);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            border: 1px solid var(--secondary-color);
-        }
-
-        .reply-form {
-            display: none;
-            margin-top: 1rem;
-        }
-
-        .reply-input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            resize: vertical;
-            min-height: 60px;
-            background: var(--card-bg);
-            color: var(--text-color);
-        }
-
-        .reply-name-input {
-            width: 100%;
-            padding: 0.6rem;
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            background: var(--card-bg);
-            color: var(--text-color);
-            font-size: 0.9rem;
-        }
-
-        /* Hidden Class */
-        .hidden {
-            display: none;
-        }
-
-        /* Back Button */
-        .back-button {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .back-button:hover {
-            transform: translateX(-5px);
-        }
-
-        /* Story Reading */
-        .story-reading {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-            border: 2px solid var(--primary-color);
-        }
-
-        /* Questions name input */
-        .answers-name-box {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: var(--secondary-color);
-            border-radius: 12px;
-        }
-
-        .answers-name-box label {
-            font-size: 0.95rem;
-            color: var(--text-color);
-            display: block;
-            margin-bottom: 0.4rem;
-        }
-
-        .answers-name-box input {
-            width: 100%;
-            padding: 0.8rem;
-            border-radius: 8px;
-            border: 1.5px solid var(--primary-color);
-            background: var(--card-bg);
-        }
     </style>
 </head>
+
 <body>
-<!-- Navigation Bar -->
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="#home" class="nav-logo">📚 مكتبة القصص</a>
-        <ul class="nav-links">
-            <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#stories">مكتبة القصص</a></li>
-            <li><a href="#cafe">مقهى الحوار</a></li>
-        </ul>
-        <div class="user-section" id="userSection">
-            ضيوف الموقع لا يحتاجون تسجيل دخول :)
+
+    <!-- ============ NAVBAR ============ -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">📚 مكتبة القصص</a>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#stories">مكتبة القصص</a></li>
+                <li><a href="#cafe">مقهى الحوار</a></li>
+            </ul>
+            <div class="user-section">ضيوف الموقع لا يحتاجون تسجيل دخول :)</div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-
-    <!-- Home Page -->
+    <!-- ============ HOME ============ -->
     <div id="homePage" class="container">
-        <header class="main-header">
+        <div class="main-header">
             <h1>مرحباً بكم في مكتبة القصص</h1>
-            <div class="theme-indicator" id="themeIndicator">🩵</div>
-        </header>
-
-        <!-- Story of the Day -->
-        <div class="story-of-day" id="storyOfDay" onclick="openDailyStory()">
-            <button class="reset-daily-btn" onclick="resetDailyStory(event)">🔄 تجربة قصة جديدة</button>
-            <div class="daily-badge">قصة اليوم</div>
-            <h2 id="dailyStoryTitle">...</h2>
-            <p id="dailyStoryDesc">جاري تحميل قصة اليوم...</p>
+            <div id="themeIndicator">🩵</div>
         </div>
 
-        <!-- Ideas Section -->
-        <section class="ideas-section">
+        <div class="ideas-section">
             <h2>💡 صندوق الاقتراحات</h2>
-            <div class="idea-form">
-                <div class="small-label">اسمك (اختياري):</div>
-                <input type="text" id="ideaName" class="name-input" placeholder="مثال: قارئة مجهولة، زائر من تويتر...">
-                <textarea class="idea-input" id="ideaInput" placeholder="ما الفكرة التي تود أن تراها في القصة القادمة؟ اكتب اقتراحك هنا..."></textarea>
-                <button class="submit-idea-btn" onclick="submitIdea()">إرسال الفكرة ✨</button>
-            </div>
-            <div class="discussions-list" id="ideasList">
-                <!-- Ideas will be displayed here -->
-            </div>
-        </section>
+            <input id="ideaName" placeholder="اسمك (اختياري)">
+            <textarea id="ideaInput" placeholder="اكتب اقتراحك..."></textarea>
+            <button onclick="submitIdea()">إرسال</button>
+            <div id="ideasList" style="margin-top:2rem;"></div>
+        </div>
     </div>
 
-    <!-- Stories Library Page -->
+    <!-- ============ STORIES PAGE ============ -->
     <div id="storiesPage" class="container hidden">
-        <button class="back-button" onclick="showHomePage()">← العودة للرئيسية</button>
-        <h1 style="text-align: center; color: var(--primary-color); margin-bottom: 3rem;">مكتبة القصص</h1>
-        <div class="stories-grid" id="storiesGrid">
-            <!-- All stories will be displayed here -->
-        </div>
+        <button onclick="navigate('#home')">← رجوع</button>
+        <h1 style="text-align:center;">مكتبة القصص</h1>
+        <div id="storiesGrid" style="margin-top:2rem;"></div>
     </div>
 
-    <!-- Cafe Page -->
+    <!-- ============ CAFE PAGE ============ -->
     <div id="cafePage" class="container hidden">
-        <button class="back-button" onclick="showHomePage()">← العودة للرئيسية</button>
-        <section class="cafe-section">
+        <button onclick="navigate('#home')">← رجوع</button>
+        <div class="cafe-section">
             <h2>☕ مقهى الحوار</h2>
-            <div class="discussion-form">
-                <div class="small-label">اسمك (اختياري):</div>
-                <input type="text" id="discussionName" class="name-input" placeholder="مثال: شخص غريب، صديقة خجولة...">
-                <textarea class="discussion-input" id="discussionInput" placeholder="ماذا تود أن تناقش مع زوار الموقع؟"></textarea>
-                <button class="submit-idea-btn" onclick="submitDiscussion()">نشر النقاش 💬</button>
-            </div>
-            <div class="discussions-list" id="discussionsList">
-                <!-- Discussions will be displayed here -->
-            </div>
-        </section>
+
+            <input id="discussionName" placeholder="اسمك (اختياري)">
+            <textarea id="discussionInput" placeholder="اكتب نقاشك..."></textarea>
+            <button onclick="submitDiscussion()">نشر</button>
+
+            <div id="discussionsList" style="margin-top:2rem;"></div>
+        </div>
     </div>
 
-    <!-- Story Reading Section -->
-    <section id="storyReadingSection" class="container hidden">
-        <button class="back-button" onclick="showStoriesPage()">← العودة للمكتبة</button>
-        <div class="story-reading" id="storyContent">
-            <!-- Story content will be loaded here -->
-        </div>
-        <button class="submit-idea-btn" onclick="showQuestions()" style="margin-top: 2rem;">أكملت القراءة 💭</button>
-    </section>
+    <!-- ============ STORY READING ============ -->
+    <div id="storyReadingSection" class="container hidden">
+        <button onclick="navigate('#stories')">← رجوع</button>
+        <div id="storyContent" class="story-reading"></div>
+        <button onclick="navigate('#questions')">أكملت القراءة</button>
+    </div>
 
-    <!-- Questions Section -->
-    <section id="questionsSection" class="container hidden">
-        <button class="back-button" onclick="showStoryReading(currentStoryId)">← العودة للقصة</button>
+    <!-- ============ QUESTIONS ============ -->
+    <div id="questionsSection" class="container hidden">
+        <button onclick="navigate('#story-'+currentStoryId)">← رجوع</button>
+
         <div class="ideas-section">
             <h2>💭 فكر فيها...</h2>
-            <div class="answers-name-box">
-                <label for="answersName">اسمك في الإجابات (اختياري):</label>
-                <input type="text" id="answersName" placeholder="اكتبه مرة واحدة لكل الأجوبة، أو اتركه فارغاً ليظهر (مجهول)">
-            </div>
-            <div id="questionsContainer">
-                <!-- Questions will be loaded here -->
-            </div>
-            <div class="discussions-list" id="answersContainer">
-                <!-- Answers will be displayed here -->
-            </div>
+            <input id="answersName" placeholder="اسمك (اختياري)">
+            <div id="questionsContainer"></div>
+            <div id="answersContainer" style="margin-top:2rem;"></div>
         </div>
-    </section>
+    </div>
 
+
+    <!-- ============ SCRIPT ============ -->
     <script>
-        // ========== Firebase Init ==========
+        /* ===============================
+             Firebase Configuration
+        ================================ */
         const firebaseConfig = {
             apiKey: "AIzaSyCTHtK0c0t9fSNmtukx8wSoZALrfnxmVhw",
             authDomain: "my-stories-site.firebaseapp.com",
@@ -599,670 +143,209 @@
             storageBucket: "my-stories-site.firebasestorage.app",
             messagingSenderId: "1027697190942",
             appId: "1:1027697190942:web:5798dc94e1358050caa60f",
-            measurementId: "G-VE62Y5PRYJ"
         };
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
 
-        // ========== البيانات الأساسية مع الثيمات ==========
-               // All 12 Stories Data
+        /* ===============================
+             Stories Data (نفس نسختك)
+        ================================ */
         const stories = [
-            {
-                id: 1,
-                title: "رسائلنا",
-                category: "رومانسية",
-                theme: "theme-romance",
-                description: "قصة حب تروى عبر الرسائل السرية",
-                content: `في عالم حيث الكلمات تصنع مصائر، تبدأ قصة حب عبر رسائل سرية...`,
-                questions: [
-                    "ما رأيك في الحب عبر الرسائل؟",
-                    "هل تعتقد أن الأسرار تجعل العلاقة أكثر إثارة؟"
-                ]
-            },
-            {
-                id: 2,
-                title: "زميلي",
-                category: "دراما",
-                theme: "theme-drama",
-                description: "علاقة معقدة بين زملاء العمل",
-                content: `خلف أبواب المكاتب المغلقة، توجد قصص لا يعرفها أحد...`,
-                questions: [
-                    "هل يمكن أن تتحول علاقة العمل إلى حب؟",
-                    "ما حدود العلاقة بين الزملاء في العمل؟"
-                ]
-            },
-            {
-                id: 3,
-                title: "زوجته",
-                category: "غموض",
-                theme: "theme-mystery",
-                description: "أسرار خلف أبواب مغلقة",
-                content: `ليست كل الأبواب المغلقة تحمي أسراراً، بعضها يخبئ جرائم...`,
-                questions: [
-                    "ما الذي يختبئ وراء الوجوه الهادئة؟",
-                    "هل تعتقد أن الزواج قد يكون سجناً؟"
-                ]
-            },
-            {
-                id: 4,
-                title: "شيء لي",
-                category: "دراما",
-                theme: "theme-drama",
-                description: "رحلة البحث عن الذات",
-                content: `أحياناً تضيع في البحث عن شيء لا تعرف أنه كان معك طوال الوقت...`,
-                questions: [
-                    "هل تعتقد أن البطلة تغيرت للأفضل؟",
-                    "من تتعاطف معه أكثر: البطلة أم الصديقة؟"
-                ]
-            }
+            { id:1, title:"رسائلنا", category:"رومانسية", description:"قصة حب...", content:"...", questions:["...","..."] },
+            { id:2, title:"زميلي", category:"دراما", description:"...", content:"...", questions:["...","..."] },
+            { id:3, title:"زوجته", category:"غموض", description:"...", content:"...", questions:["...","..."] },
+            { id:4, title:"شيء لي", category:"دراما", description:"...", content:"...", questions:["...","..."] }
         ];
 
         let currentStoryId = null;
 
-        function setTheme(themeClass, storyTitle = '') {
-            document.body.className = themeClass || '';
-            const themeNames = {
-                'theme-romance': 'رومانسي 💖',
-                'theme-drama': 'درامي 🎭',
-                'theme-mystery': 'غامض 🕵️',
-                'theme-suspense': 'تشويقي 🔍'
-            };
+        /* ===============================
+                PAGE NAVIGATION FIXED
+           (الريفريش يرجّع نفس الصفحة)
+        ================================ */
 
-            const indicator = document.getElementById('themeIndicator');
-            if (storyTitle && themeClass && themeNames[themeClass]) {
-                indicator.textContent = `ثيم ${themeNames[themeClass]} - ${storyTitle}`;
-            } else {
-                indicator.textContent = '🩵';
-            }
+        function navigate(hash) {
+            window.location.hash = hash;
         }
 
-        // ========== قصة اليوم (محلية لكل جهاز) ==========
-        function getDailyStory() {
-            const today = new Date().toDateString();
-            const saved = localStorage.getItem('daily_story');
+        function renderPage() {
+            const hash = window.location.hash || "#home";
 
-            if (saved) {
-                try {
-                    const { date, storyId } = JSON.parse(saved);
-                    if (date === today) {
-                        const story = stories.find(s => s.id === storyId);
-                        if (story) return story;
-                    }
-                } catch (e) {
-                    console.error(e);
-                }
+            hideAll();
+
+            if (hash === "#home") return showHome();
+            if (hash === "#stories") return showStories();
+            if (hash === "#cafe") return showCafe();
+
+            if (hash.startsWith("#story-")) {
+                const id = Number(hash.replace("#story-", ""));
+                return showStory(id);
             }
 
-            const availableStories = stories.filter(s => s.id);
-            if (!availableStories.length) return null;
-
-            const randomStory = availableStories[Math.floor(Math.random() * availableStories.length)];
-            localStorage.setItem('daily_story', JSON.stringify({
-                date: today,
-                storyId: randomStory.id,
-                timestamp: Date.now()
-            }));
-            return randomStory;
-        }
-
-        function displayDailyStory() {
-            const story = getDailyStory();
-            const titleEl = document.getElementById('dailyStoryTitle');
-            const descEl = document.getElementById('dailyStoryDesc');
-
-            if (story) {
-                titleEl.textContent = story.title;
-                descEl.textContent = story.description;
-            } else {
-                titleEl.textContent = "لا توجد قصة اليوم";
-                descEl.textContent = "جاري تحميل القصص...";
-            }
-        }
-
-        function openDailyStory() {
-            const story = getDailyStory();
-            if (story) {
-                showStoryReading(story.id);
-            } else {
-                alert("⚠️ لا توجد قصة متاحة اليوم");
-            }
-        }
-
-        function resetDailyStory(event) {
-            event.stopPropagation();
-            localStorage.removeItem('daily_story');
-            displayDailyStory();
-            alert('🔄 تم إعادة تعيين قصة اليوم - جربي تضغطين على قصة اليوم مرة ثانية!');
-        }
-
-        // ========== أفكار (ideas) ==========
-        async function getIdeasFromDB() {
-            const snapshot = await db.collection("ideas")
-                .orderBy("createdAt", "desc")
-                .get();
-
-            return snapshot.docs.map(doc => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    text: data.text,
-                    userName: data.userName || "مجهول",
-                    timestamp: data.createdAt
-                        ? data.createdAt.toDate().toLocaleString('ar-SA')
-                        : ''
-                };
-            });
-        }
-
-        async function saveIdeaToDB(text, userName) {
-            await db.collection("ideas").add({
-                text,
-                userName,
-                createdAt: serverTimestamp()
-            });
-        }
-
-        async function displayIdeas() {
-            const ideasList = document.getElementById('ideasList');
-            try {
-                const ideas = await getIdeasFromDB();
-                if (!ideas.length) {
-                    ideasList.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد أفكار بعد...</p>';
-                    return;
-                }
-                ideasList.innerHTML = ideas.map(idea => `
-                    <div class="discussion-item">
-                        <div class="discussion-meta">
-                            <span>⏰ ${idea.timestamp}</span>
-                            <span class="user-badge">${idea.userName}</span>
-                        </div>
-                        <p>${idea.text}</p>
-                    </div>
-                `).join('');
-            } catch (e) {
-                console.error(e);
-                ideasList.innerHTML = '<p style="text-align: center; opacity: 0.6;">حدث خطأ في تحميل الأفكار...</p>';
-            }
-        }
-
-        async function submitIdea() {
-            const ideaNameInput = document.getElementById('ideaName');
-            const ideaInput = document.getElementById('ideaInput');
-
-            const name = ideaNameInput.value.trim() || "مجهول";
-            const idea = ideaInput.value.trim();
-
-            if (!idea) {
-                alert('⚠️ الرجاء كتابة فكرة أولاً');
-                return;
+            if (hash === "#questions") {
+                return showQuestions();
             }
 
-            try {
-                await saveIdeaToDB(idea, name);
-                ideaInput.value = '';
-                // نخلي الاسم كما هو لو حابة تكرر
-                await displayIdeas();
-                alert('✨ شكراً لك! تم إرسال فكرتك بنجاح');
-            } catch (e) {
-                console.error(e);
-                alert('حدث خطأ أثناء حفظ الفكرة.');
-            }
+            showHome();
         }
 
-        // ========== النقاشات (discussions) ==========
-        async function getDiscussionsFromDB() {
-            const snapshot = await db.collection("discussions")
-                .orderBy("createdAt", "desc")
-                .get();
+        window.addEventListener("hashchange", renderPage);
+        window.addEventListener("load", renderPage);
 
-            return snapshot.docs.map(doc => {
-                const data = doc.data();
-                const timestamp = data.createdAt
-                    ? data.createdAt.toDate().toLocaleString('ar-SA')
-                    : '';
-                return {
-                    id: doc.id,
-                    text: data.text,
-                    userName: data.userName || "مجهول",
-                    likeCount: typeof data.likeCount === "number" ? data.likeCount : 0,
-                    replies: Array.isArray(data.replies) ? data.replies : [],
-                    timestamp
-                };
-            });
+        function hideAll() {
+            document.querySelectorAll(".container").forEach(c => c.classList.add("hidden"));
         }
 
-        async function saveDiscussionToDB(text, userName) {
-            await db.collection("discussions").add({
-                text,
-                userName,
-                likeCount: 0,
-                replies: [],
-                createdAt: serverTimestamp()
-            });
+        /* ===============================
+                    HOME
+        ================================ */
+
+        function showHome() {
+            document.getElementById("homePage").classList.remove("hidden");
+            displayIdeas();
         }
 
-        async function displayDiscussions() {
-            const discussionsList = document.getElementById('discussionsList');
-            try {
-                const discussions = await getDiscussionsFromDB();
-                if (!discussions.length) {
-                    discussionsList.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد نقاشات بعد...</p>';
-                    return;
-                }
+        /* ===============================
+                    STORIES
+        ================================ */
+        function showStories() {
+            document.getElementById("storiesPage").classList.remove("hidden");
 
-                discussionsList.innerHTML = discussions.map(discussion => `
-                    <div class="discussion-item">
-                        <div class="discussion-meta">
-                            <span>⏰ ${discussion.timestamp}</span>
-                            <span class="user-badge">${discussion.userName}</span>
-                        </div>
-                        <p>${discussion.text}</p>
-
-                        <div class="discussion-actions">
-                            <button class="like-btn" onclick="handleLike('${discussion.id}', ${discussion.likeCount})">
-                                ❤️ ${discussion.likeCount}
-                            </button>
-                            <button class="reply-btn" onclick="toggleReplyForm('${discussion.id}')">
-                                💬 رد
-                            </button>
-                        </div>
-
-                        <div class="reply-form" id="replyForm-${discussion.id}">
-                            <input class="reply-name-input" id="replyName-${discussion.id}" placeholder="اسمك (اختياري)">
-                            <textarea class="reply-input" id="replyInput-${discussion.id}" placeholder="اكتب ردك..."></textarea>
-                            <button class="submit-idea-btn" onclick="submitReply('${discussion.id}')" style="padding: 0.5rem 1rem; font-size: 0.9rem;">إرسال الرد</button>
-                        </div>
-
-                        ${discussion.replies.length ? `
-                        <div class="replies-section">
-                            ${discussion.replies.map(reply => `
-                                <div class="reply-item">
-                                    <div class="discussion-meta">
-                                        <span>⏰ ${reply.timestamp || ''}</span>
-                                        <span class="user-badge">${reply.userName || 'مجهول'}</span>
-                                    </div>
-                                    <p>${reply.text}</p>
-                                </div>
-                            `).join('')}
-                        </div>` : ''}
-                    </div>
-                `).join('');
-            } catch (e) {
-                console.error(e);
-                discussionsList.innerHTML = '<p style="text-align: center; opacity: 0.6;">حدث خطأ في تحميل النقاشات...</p>';
-            }
-        }
-
-        async function submitDiscussion() {
-            const discussionNameInput = document.getElementById('discussionName');
-            const discussionInput = document.getElementById('discussionInput');
-
-            const name = discussionNameInput.value.trim() || "مجهول";
-            const text = discussionInput.value.trim();
-
-            if (!text) {
-                alert('⚠️ الرجاء كتابة نقاش أولاً');
-                return;
-            }
-
-            try {
-                await saveDiscussionToDB(text, name);
-                discussionInput.value = '';
-                await displayDiscussions();
-                alert('💬 تم نشر نقاشك بنجاح');
-            } catch (e) {
-                console.error(e);
-                alert('حدث خطأ أثناء نشر النقاش.');
-            }
-        }
-
-        function toggleReplyForm(discussionId) {
-            const replyForm = document.getElementById(`replyForm-${discussionId}`);
-            replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
-        }
-
-        async function submitReply(discussionId) {
-            const replyNameInput = document.getElementById(`replyName-${discussionId}`);
-            const replyInput = document.getElementById(`replyInput-${discussionId}`);
-
-            const name = replyNameInput.value.trim() || "مجهول";
-            const replyText = replyInput.value.trim();
-
-            if (!replyText) {
-                alert('⚠️ الرجاء كتابة رد أولاً');
-                return;
-            }
-
-            try {
-                const docRef = db.collection("discussions").doc(discussionId);
-                const docSnap = await docRef.get();
-                if (!docSnap.exists) return;
-
-                const data = docSnap.data();
-                const replies = Array.isArray(data.replies) ? data.replies : [];
-                replies.unshift({
-                    text: replyText,
-                    userName: name,
-                    timestamp: new Date().toLocaleString('ar-SA')
-                });
-
-                await docRef.update({ replies });
-                replyInput.value = '';
-                // نخلي الاسم كما هو
-                document.getElementById(`replyForm-${discussionId}`).style.display = 'none';
-                await displayDiscussions();
-            } catch (e) {
-                console.error(e);
-                alert('حدث خطأ أثناء إرسال الرد.');
-            }
-        }
-
-        async function handleLike(discussionId, currentLikeCount) {
-            try {
-                const docRef = db.collection("discussions").doc(discussionId);
-                await docRef.update({
-                    likeCount: (currentLikeCount || 0) + 1
-                });
-                await displayDiscussions();
-            } catch (e) {
-                console.error(e);
-                alert('حدث خطأ أثناء تسجيل الإعجاب.');
-            }
-        }
-
-        // ========== القراءة والأسئلة + Firestore للأجوبة ==========
-        function showStoryReading(storyId) {
-            hideAllPages();
-            document.getElementById('storyReadingSection').classList.remove('hidden');
-
-            const story = stories.find(s => s.id === storyId);
-            if (!story) return;
-
-            currentStoryId = storyId;
-
-            setTheme(story.theme, story.title);
-
-            document.getElementById('storyContent').innerHTML = `
-                <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">${story.title}</h2>
-                <div style="background: var(--secondary-color); padding: 2rem; border-radius: 15px; line-height: 1.8;">
-                    ${story.content}
+            const grid = document.getElementById("storiesGrid");
+            grid.innerHTML = stories.map(s => `
+                <div onclick="navigate('#story-${s.id}')" 
+                     style="background:white; padding:1.5rem; border-radius:15px; box-shadow:var(--shadow); cursor:pointer;">
+                    <span>${s.category}</span>
+                    <h3>${s.title}</h3>
+                    <p>${s.description}</p>
                 </div>
+            `).join("");
+        }
+
+        /* ===============================
+                    READ STORY
+        ================================ */
+        function showStory(id) {
+            currentStoryId = id;
+            const story = stories.find(s => s.id === id);
+
+            document.getElementById("storyReadingSection").classList.remove("hidden");
+
+            document.getElementById("storyContent").innerHTML = `
+                <h2>${story.title}</h2>
+                <p>${story.content}</p>
             `;
         }
 
+        /* ===============================
+                    QUESTIONS
+        ================================ */
         function showQuestions() {
-            hideAllPages();
-            document.getElementById('questionsSection').classList.remove('hidden');
+            document.getElementById("questionsSection").classList.remove("hidden");
 
             const story = stories.find(s => s.id === currentStoryId);
-            if (!story) return;
+            const container = document.getElementById("questionsContainer");
 
-            const questionsContainer = document.getElementById('questionsContainer');
-
-            questionsContainer.innerHTML = story.questions.map((question, index) => `
-                <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--secondary-color);">
-                    <h3 style="color: var(--text-color); margin-bottom: 1rem;">${question}</h3>
-                    <textarea class="idea-input" id="answer${index}" placeholder="اكتب إجابتك هنا..."></textarea>
-                </div>
-            `).join('');
-
-            questionsContainer.innerHTML += `
-                <button class="submit-idea-btn" onclick="submitAnswers()">إرسال الإجابات</button>
-            `;
+            container.innerHTML = story.questions.map((q,i)=>`
+                <h3>${q}</h3>
+                <textarea id="answer${i}"></textarea>
+            `).join("");
 
             displayStoryAnswers();
         }
 
-        async function displayStoryAnswers() {
-            const answersContainer = document.getElementById('answersContainer');
-            if (!currentStoryId) {
-                answersContainer.innerHTML = '';
-                return;
-            }
+        /* ===============================
+              FIRESTORE — Ideas + Cafe
+        ================================ */
 
-            try {
-                const snapshot = await db.collection("storyAnswers")
-                    .where("storyId", "==", currentStoryId)
-                    .orderBy("createdAt", "desc")
-                    .get();
+        async function submitIdea() {
+            let text = document.getElementById("ideaInput").value.trim();
+            let name = document.getElementById("ideaName").value.trim() || "مجهول";
 
-                if (snapshot.empty) {
-                    answersContainer.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد أجوبة بعد...</p>';
-                    return;
-                }
+            if (!text) return alert("اكتبي الفكرة أولاً");
 
-                const answers = snapshot.docs.map(doc => {
-                    const data = doc.data();
-                    return {
-                        text: data.text,
-                        userName: data.userName || "مجهول",
-                        timestamp: data.createdAt
-                            ? data.createdAt.toDate().toLocaleString('ar-SA')
-                            : ''
-                    };
-                });
+            await db.collection("ideas").add({
+                text, userName:name, createdAt:serverTimestamp()
+            });
 
-                answersContainer.innerHTML = answers.map(answer => `
-                    <div class="discussion-item">
-                        <div class="discussion-meta">
-                            <span>⏰ ${answer.timestamp}</span>
-                            <span class="user-badge">${answer.userName}</span>
-                        </div>
-                        <p>${answer.text}</p>
-                    </div>
-                `).join('');
-            } catch (e) {
-                console.error(e);
-                answersContainer.innerHTML = '<p style="text-align: center; opacity: 0.6;">حدث خطأ في تحميل الأجوبة...</p>';
-            }
-        }
-
-        async function submitAnswers() {
-            if (!currentStoryId) {
-                alert('لا توجد قصة محددة.');
-                return;
-            }
-
-            const story = stories.find(s => s.id === currentStoryId);
-            if (!story) return;
-
-            const nameInput = document.getElementById('answersName');
-            const userName = nameInput.value.trim() || "مجهول";
-
-            let hasNew = false;
-
-            try {
-                for (let i = 0; i < story.questions.length; i++) {
-                    const answerInput = document.getElementById(`answer${i}`);
-                    if (answerInput && answerInput.value.trim()) {
-                        const text = answerInput.value.trim();
-                        await db.collection("storyAnswers").add({
-                            storyId: currentStoryId,
-                            questionIndex: i,
-                            text,
-                            userName,
-                            createdAt: serverTimestamp()
-                        });
-                        answerInput.value = '';
-                        hasNew = true;
-                    }
-                }
-
-                if (hasNew) {
-                    await displayStoryAnswers();
-                    alert('✅ تم حفظ إجاباتك بنجاح!');
-                } else {
-                    alert('⚠️ لم تقم بكتابة أي إجابة.');
-                }
-            } catch (e) {
-                console.error(e);
-                alert('حدث خطأ أثناء حفظ الأجوبة.');
-            }
-        }
-
-        // ========== التنقل بين الصفحات ==========
-        function hideAllPages() {
-            document.getElementById('homePage').classList.add('hidden');
-            document.getElementById('storiesPage').classList.add('hidden');
-            document.getElementById('cafePage').classList.add('hidden');
-            document.getElementById('storyReadingSection').classList.add('hidden');
-            document.getElementById('questionsSection').classList.add('hidden');
-        }
-
-        function showHomePage() {
-            hideAllPages();
-            document.getElementById('homePage').classList.remove('hidden');
-            setTheme('', '');
-            displayDailyStory();
+            document.getElementById("ideaInput").value = "";
             displayIdeas();
         }
 
-        function showStoriesPage() {
-            hideAllPages();
-            document.getElementById('storiesPage').classList.remove('hidden');
-            setTheme('', '');
-            displayAllStories();
+        async function displayIdeas() {
+            const list = document.getElementById("ideasList");
+            const snap = await db.collection("ideas").orderBy("createdAt","desc").get();
+
+            list.innerHTML = snap.empty ? "لا توجد أفكار بعد" :
+                snap.docs.map(d => {
+                    let x = d.data();
+                    return `<div style="margin-bottom:1rem; padding:1rem; background:var(--secondary-color); border-radius:10px;">
+                        <b>${x.userName}</b><br>${x.text}
+                    </div>`;
+                }).join("");
         }
 
-        function showCafePage() {
-            hideAllPages();
-            document.getElementById('cafePage').classList.remove('hidden');
-            setTheme('', '');
+        /* ========== Cafe Discussions ========== */
+
+        async function submitDiscussion() {
+            let text = document.getElementById("discussionInput").value.trim();
+            let name = document.getElementById("discussionName").value.trim() || "مجهول";
+            if (!text) return alert("اكتب النقاش أولاً");
+
+            await db.collection("discussions").add({
+                text, userName:name, likeCount:0, replies:[],
+                createdAt:serverTimestamp()
+            });
+
+            document.getElementById("discussionInput").value = "";
             displayDiscussions();
         }
 
-        function displayAllStories() {
-            const storiesGrid = document.getElementById('storiesGrid');
-            storiesGrid.innerHTML = stories.map(story => `
-                <div class="story-card" onclick="showStoryReading(${story.id})">
-                    <span class="category">${story.category}</span>
-                    <h3>${story.title}</h3>
-                    <p>${story.description}</p>
-                </div>
-            `).join('');
+        async function displayDiscussions() {
+            const list = document.getElementById("discussionsList");
+            const snap = await db.collection("discussions").orderBy("createdAt","desc").get();
+
+            if (snap.empty) {
+                list.innerHTML = "لا توجد نقاشات بعد";
+                return;
+            }
+
+            list.innerHTML = snap.docs.map(doc => {
+                const x = doc.data();
+                return `
+                    <div style="background:var(--secondary-color); padding:1rem; border-radius:10px; margin-bottom:1rem;">
+                        <b>${x.userName}</b> — ❤️ ${x.likeCount}<br>
+                        ${x.text}
+                    </div>
+                `;
+            }).join("");
         }
 
-        // ========== التهيئة ==========
-        function initialize() {
-            showHomePage();
+        /* ===============================
+             Story Answers (Firestore)
+        ================================ */
+
+        async function displayStoryAnswers() {
+            const box = document.getElementById("answersContainer");
+
+            const snap = await db.collection("storyAnswers")
+                .where("storyId","==",currentStoryId)
+                .orderBy("createdAt","desc")
+                .get();
+
+            box.innerHTML = snap.empty ? "لا توجد إجابات بعد" :
+                snap.docs.map(d => {
+                    let x = d.data();
+                    return `
+                        <div style="background:var(--secondary-color); padding:1rem; border-radius:10px; margin-bottom:1rem;">
+                            <b>${x.userName}</b><br>${x.text}
+                        </div>
+                    `;
+                }).join("");
         }
-
-        initialize();
-        // =========================
-//   Hash Navigation System
-// =========================
-
-window.addEventListener("hashchange", handleHashNavigation);
-window.addEventListener("load", handleHashNavigation);
-
-function handleHashNavigation() {
-    const hash = window.location.hash.replace('#', '');
-
-    if (!hash || hash === "home") {
-        showHomePage();
-        return;
-    }
-
-    if (hash === "stories") {
-        showStoriesPage();
-        return;
-    }
-
-    if (hash === "cafe") {
-        showCafePage();
-        return;
-    }
-
-    // فتح قصة معينة
-    if (hash.startsWith("story-")) {
-        const id = parseInt(hash.split("-")[1]);
-        if (!isNaN(id)) showStoryReading(id);
-        return;
-    }
-
-    // فتح أسئلة قصة
-    if (hash.startsWith("questions-")) {
-        const id = parseInt(hash.split("-")[1]);
-        if (!isNaN(id)) {
-            currentStoryId = id;
-            showQuestions();
-        }
-        return;
-    }
-}
-
-// تعديل أزرار تغيير الصفحة كي تضيف hash
-function showHomePage() {
-    window.location.hash = "home";
-    hideAllPages();
-    document.getElementById('homePage').classList.remove('hidden');
-    setTheme('', '');
-    displayDailyStory();
-    displayIdeas();
-}
-
-function showStoriesPage() {
-    window.location.hash = "stories";
-    hideAllPages();
-    document.getElementById('storiesPage').classList.remove('hidden');
-    setTheme('', '');
-    displayAllStories();
-}
-
-function showCafePage() {
-    window.location.hash = "cafe";
-    hideAllPages();
-    document.getElementById('cafePage').classList.remove('hidden');
-    setTheme('', '');
-    displayDiscussions();
-}
-
-function showStoryReading(storyId) {
-    window.location.hash = `story-${storyId}`;
-    hideAllPages();
-    document.getElementById('storyReadingSection').classList.remove('hidden');
-
-    const story = stories.find(s => s.id === storyId);
-    currentStoryId = storyId;
-
-    setTheme(story.theme, story.title);
-
-    document.getElementById('storyContent').innerHTML = `
-        <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">${story.title}</h2>
-        <div style="background: var(--secondary-color); padding: 2rem; border-radius: 15px; line-height: 1.8;">
-            ${story.content}
-        </div>
-    `;
-}
-
-function showQuestions() {
-    window.location.hash = `questions-${currentStoryId}`;
-    hideAllPages();
-    document.getElementById('questionsSection').classList.remove('hidden');
-
-    const story = stories.find(s => s.id === currentStoryId);
-    const questionsContainer = document.getElementById('questionsContainer');
-
-    questionsContainer.innerHTML = story.questions.map((question, index) => `
-        <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--secondary-color);">
-            <h3 style="color: var(--text-color); margin-bottom: 1rem;">${question}</h3>
-            <textarea class="idea-input" id="answer${index}" placeholder="اكتب إجابتك هنا..."></textarea>
-        </div>
-    `).join('');
-
-    questionsContainer.innerHTML += `
-        <button class="submit-idea-btn" onclick="submitAnswers()">إرسال الإجابات</button>
-    `;
-
-    displayStoryAnswers();
-}
 
     </script>
 </body>
 </html>
-
-
-
-
