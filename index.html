@@ -152,12 +152,57 @@
         /* ===============================
              Stories Data (نفس نسختك)
         ================================ */
-        const stories = [
-            { id:1, title:"رسائلنا", category:"رومانسية", description:"قصة حب...", content:"...", questions:["...","..."] },
-            { id:2, title:"زميلي", category:"دراما", description:"...", content:"...", questions:["...","..."] },
-            { id:3, title:"زوجته", category:"غموض", description:"...", content:"...", questions:["...","..."] },
-            { id:4, title:"شيء لي", category:"دراما", description:"...", content:"...", questions:["...","..."] }
+ const stories = [
+            {
+                id: 1,
+                title: "رسائلنا",
+                category: "رومانسية",
+                theme: "theme-romance",
+                description: "قصة حب تروى عبر الرسائل السرية",
+                content: `في عالم حيث الكلمات تصنع مصائر، تبدأ قصة حب عبر رسائل سرية...`,
+                questions: [
+                    "ما رأيك في الحب عبر الرسائل؟",
+                    "هل تعتقد أن الأسرار تجعل العلاقة أكثر إثارة؟"
+                ]
+            },
+            {
+                id: 2,
+                title: "زميلي",
+                category: "دراما",
+                theme: "theme-drama",
+                description: "علاقة معقدة بين زملاء العمل",
+                content: `خلف أبواب المكاتب المغلقة، توجد قصص لا يعرفها أحد...`,
+                questions: [
+                    "هل يمكن أن تتحول علاقة العمل إلى حب؟",
+                    "ما حدود العلاقة بين الزملاء في العمل؟"
+                ]
+            },
+            {
+                id: 3,
+                title: "زوجته",
+                category: "غموض",
+                theme: "theme-mystery",
+                description: "أسرار خلف أبواب مغلقة",
+                content: `ليست كل الأبواب المغلقة تحمي أسراراً، بعضها يخبئ جرائم...`,
+                questions: [
+                    "ما الذي يختبئ وراء الوجوه الهادئة؟",
+                    "هل تعتقد أن الزواج قد يكون سجناً؟"
+                ]
+            },
+            {
+                id: 4,
+                title: "شيء لي",
+                category: "دراما",
+                theme: "theme-drama",
+                description: "رحلة البحث عن الذات",
+                content: `أحياناً تضيع في البحث عن شيء لا تعرف أنه كان معك طوال الوقت...`,
+                questions: [
+                    "هل تعتقد أن البطلة تغيرت للأفضل؟",
+                    "من تتعاطف معه أكثر: البطلة أم الصديقة؟"
+                ]
+            }
         ];
+
 
         let currentStoryId = null;
 
@@ -349,3 +394,4 @@
     </script>
 </body>
 </html>
+
