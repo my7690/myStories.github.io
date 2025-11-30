@@ -491,20 +491,21 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo" onclick="showHomePage()">📚 مكتبة القصص</a>
-            <ul class="nav-links">
-                <li><a href="#" onclick="showHomePage()">الرئيسية</a></li>
-                <li><a href="#" onclick="showStoriesPage()">مكتبة القصص</a></li>
-                <li><a href="#" onclick="showCafePage()">مقهى الحوار</a></li>
-            </ul>
-            <div class="user-section" id="userSection">
-                ضيوف الموقع لا يحتاجون تسجيل دخول :)
-            </div>
+<!-- Navigation Bar -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#home" class="nav-logo">📚 مكتبة القصص</a>
+        <ul class="nav-links">
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#stories">مكتبة القصص</a></li>
+            <li><a href="#cafe">مقهى الحوار</a></li>
+        </ul>
+        <div class="user-section" id="userSection">
+            ضيوف الموقع لا يحتاجون تسجيل دخول :)
         </div>
-    </nav>
+    </div>
+</nav>
+
 
     <!-- Home Page -->
     <div id="homePage" class="container">
@@ -5043,8 +5044,118 @@ Her pov..
         }
 
         initialize();
+        // =========================
+//   Hash Navigation System
+// =========================
+
+window.addEventListener("hashchange", handleHashNavigation);
+window.addEventListener("load", handleHashNavigation);
+
+function handleHashNavigation() {
+    const hash = window.location.hash.replace('#', '');
+
+    if (!hash || hash === "home") {
+        showHomePage();
+        return;
+    }
+
+    if (hash === "stories") {
+        showStoriesPage();
+        return;
+    }
+
+    if (hash === "cafe") {
+        showCafePage();
+        return;
+    }
+
+    // فتح قصة معينة
+    if (hash.startsWith("story-")) {
+        const id = parseInt(hash.split("-")[1]);
+        if (!isNaN(id)) showStoryReading(id);
+        return;
+    }
+
+    // فتح أسئلة قصة
+    if (hash.startsWith("questions-")) {
+        const id = parseInt(hash.split("-")[1]);
+        if (!isNaN(id)) {
+            currentStoryId = id;
+            showQuestions();
+        }
+        return;
+    }
+}
+
+// تعديل أزرار تغيير الصفحة كي تضيف hash
+function showHomePage() {
+    window.location.hash = "home";
+    hideAllPages();
+    document.getElementById('homePage').classList.remove('hidden');
+    setTheme('', '');
+    displayDailyStory();
+    displayIdeas();
+}
+
+function showStoriesPage() {
+    window.location.hash = "stories";
+    hideAllPages();
+    document.getElementById('storiesPage').classList.remove('hidden');
+    setTheme('', '');
+    displayAllStories();
+}
+
+function showCafePage() {
+    window.location.hash = "cafe";
+    hideAllPages();
+    document.getElementById('cafePage').classList.remove('hidden');
+    setTheme('', '');
+    displayDiscussions();
+}
+
+function showStoryReading(storyId) {
+    window.location.hash = `story-${storyId}`;
+    hideAllPages();
+    document.getElementById('storyReadingSection').classList.remove('hidden');
+
+    const story = stories.find(s => s.id === storyId);
+    currentStoryId = storyId;
+
+    setTheme(story.theme, story.title);
+
+    document.getElementById('storyContent').innerHTML = `
+        <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">${story.title}</h2>
+        <div style="background: var(--secondary-color); padding: 2rem; border-radius: 15px; line-height: 1.8;">
+            ${story.content}
+        </div>
+    `;
+}
+
+function showQuestions() {
+    window.location.hash = `questions-${currentStoryId}`;
+    hideAllPages();
+    document.getElementById('questionsSection').classList.remove('hidden');
+
+    const story = stories.find(s => s.id === currentStoryId);
+    const questionsContainer = document.getElementById('questionsContainer');
+
+    questionsContainer.innerHTML = story.questions.map((question, index) => `
+        <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--secondary-color);">
+            <h3 style="color: var(--text-color); margin-bottom: 1rem;">${question}</h3>
+            <textarea class="idea-input" id="answer${index}" placeholder="اكتب إجابتك هنا..."></textarea>
+        </div>
+    `).join('');
+
+    questionsContainer.innerHTML += `
+        <button class="submit-idea-btn" onclick="submitAnswers()">إرسال الإجابات</button>
+    `;
+
+    displayStoryAnswers();
+}
+
     </script>
 </body>
 </html>
+
 
 
