@@ -5004,56 +5004,118 @@ Her pov..
             }
         }
 
-        // ========== التنقل بين الصفحات ==========
-        function hideAllPages() {
-            document.getElementById('homePage').classList.add('hidden');
-            document.getElementById('storiesPage').classList.add('hidden');
-            document.getElementById('cafePage').classList.add('hidden');
-            document.getElementById('storyReadingSection').classList.add('hidden');
-            document.getElementById('questionsSection').classList.add('hidden');
-        }
+// ========== التنقل بين الصفحات باستخدام الهاش (حل مشكلة الرفريش) ==========
 
-        function showHomePage() {
-            hideAllPages();
-            document.getElementById('homePage').classList.remove('hidden');
-            setTheme('', '');
-            displayDailyStory();
-            displayIdeas();
-        }
+// دالة إخفاء كل الصفحات
+function hideAllPages() {
+    document.getElementById('homePage').classList.add('hidden');
+    document.getElementById('storiesPage').classList.add('hidden');
+    document.getElementById('cafePage').classList.add('hidden');
+    document.getElementById('storyReadingSection').classList.add('hidden');
+    document.getElementById('questionsSection').classList.add('hidden');
+}
 
-        function showStoriesPage() {
-            hideAllPages();
-            document.getElementById('storiesPage').classList.remove('hidden');
-            setTheme('', '');
-            displayAllStories();
-        }
+// دوال تنقل تضيف هاش وتعرض الصفحة
+function showHomePage() {
+    window.location.hash = "home";
+    hideAllPages();
+    document.getElementById('homePage').classList.remove('hidden');
+    setTheme('', '');
+    displayDailyStory();
+    displayIdeas();
+}
 
-        function showCafePage() {
-            hideAllPages();
-            document.getElementById('cafePage').classList.remove('hidden');
-            setTheme('', '');
-            displayDiscussions();
-        }
+function showStoriesPage() {
+    window.location.hash = "stories";
+    hideAllPages();
+    document.getElementById('storiesPage').classList.remove('hidden');
+    setTheme('', '');
+    displayAllStories();
+}
 
-        function displayAllStories() {
-            const storiesGrid = document.getElementById('storiesGrid');
-            storiesGrid.innerHTML = stories.map(story => `
-                <div class="story-card" onclick="showStoryReading(${story.id})">
-                    <span class="category">${story.category}</span>
-                    <h3>${story.title}</h3>
-                    <p>${story.description}</p>
-                </div>
-            `).join('');
-        }
+function showCafePage() {
+    window.location.hash = "cafe";
+    hideAllPages();
+    document.getElementById('cafePage').classList.remove('hidden');
+    setTheme('', '');
+    displayDiscussions();
+}
 
-        // ========== التهيئة ==========
-        function initialize() {
-            showHomePage();
-        }
+function showStoryReading(storyId) {
+    window.location.hash = `story-${storyId}`;
+    hideAllPages();
+    document.getElementById('storyReadingSection').classList.remove('hidden');
 
-        initialize();
+    const story = stories.find(s => s.id === storyId);
+    currentStoryId = storyId;
+
+    setTheme(story.theme, story.title);
+
+    document.getElementById('storyContent').innerHTML = `
+        <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">${story.title}</h2>
+        <div style="background: var(--secondary-color); padding: 2rem; border-radius: 15px; line-height: 1.8;">
+            ${story.content}
+        </div>
+    `;
+}
+
+function showQuestions() {
+    window.location.hash = `questions-${currentStoryId}`;
+    hideAllPages();
+    document.getElementById('questionsSection').classList.remove('hidden');
+
+    const story = stories.find(s => s.id === currentStoryId);
+    const questionsContainer = document.getElementById('questionsContainer');
+
+    questionsContainer.innerHTML = story.questions.map((question, index) => `
+        <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--secondary-color);">
+            <h3 style="color: var(--text-color); margin-bottom: 1rem;">${question}</h3>
+            <textarea class="idea-input" id="answer${index}" placeholder="اكتب إجابتك هنا..."></textarea>
+        </div>
+    `).join('') + `
+        <button class="submit-idea-btn" onclick="submitAnswers()">إرسال الإجابات</button>
+    `;
+
+    displayStoryAnswers();
+}
+
+// ========== نظام قراءة الهاش عند الرفريش ==========
+function handleHashNavigation() {
+    const hash = window.location.hash.replace('#', '');
+
+    if (!hash || hash === "home") return showHomePage();
+    if (hash === "stories") return showStoriesPage();
+    if (hash === "cafe") return showCafePage();
+
+    if (hash.startsWith("story-")) {
+        const id = parseInt(hash.split("-")[1]);
+        return showStoryReading(id);
+    }
+
+    if (hash.startsWith("questions-")) {
+        const id = parseInt(hash.split("-")[1]);
+        currentStoryId = id;
+        return showQuestions();
+    }
+
+    // fallback
+    showHomePage();
+}
+
+// شغل النظام
+window.addEventListener("load", handleHashNavigation);
+window.addEventListener("hashchange", handleHashNavigation);
+
+// ========== التهيئة ==========
+function initialize() {
+    handleHashNavigation();
+}
+
+initialize();
+
     </script>
 </body>
 </html>
+
 
 
