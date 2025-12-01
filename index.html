@@ -5494,12 +5494,90 @@ function changeFontSize(action) {
 
 // كل مرة نفتح صفحة قراءة، يطبق الحجم المختار تلقائياً
 document.addEventListener("DOMContentLoaded", applyFontSize);
+// ====== نظام القراءة على صفحات ======
+let currentPages = [];
+let currentPageIndex = 0;
+
+function paginateContent(text, wordsPerPage = 150) {
+    const words = text.trim().split(/\s+/);
+    const pages = [];
+
+    for (let i = 0; i < words.length; i += wordsPerPage) {
+        pages.push(words.slice(i, i + wordsPerPage).join(" "));
+    }
+
+    return pages;
+}
+
+function renderPage() {
+    const story = stories.find(s => s.id === currentStoryId);
+
+    document.getElementById('storyContent').innerHTML = `
+        <h2 style="color: var(--primary-color); text-align:center; margin-bottom:2rem;">
+            ${story.title}
+        </h2>
+        <div style="
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 15px;
+            line-height: 1.9;
+            font-size: var(--reading-font-size);
+        ">
+            ${currentPages[currentPageIndex]}
+        </div>
+
+        <div class="pagination-box">
+            <button class="pagination-btn" onclick="previousPage()">السابق</button>
+            <span class="page-number">${currentPageIndex + 1} / ${currentPages.length}</span>
+            <button class="pagination-btn" onclick="nextPage()">التالي</button>
+        </div>
+    `;
+
+    // حفظ آخر صفحة
+    localStorage.setItem(`story_${currentStoryId}_page`, currentPageIndex);
+}
+
+function showStoryReading(storyId, pushHash = true) {
+    if (pushHash) window.location.hash = `story-${storyId}`;
+    hideAllPages();
+    document.getElementById('storyReadingSection').classList.remove('hidden');
+
+    const story = stories.find(s => s.id === storyId);
+    currentStoryId = storyId;
+
+    setTheme(story.theme, story.title);
+
+    // تقسيم المحتوى لصفحات
+    currentPages = paginateContent(story.content, 150);
+
+    // استرجاع آخر صفحة
+    const savedPage = localStorage.getItem(`story_${storyId}_page`);
+    currentPageIndex = savedPage ? parseInt(savedPage) : 0;
+
+    // عرض الصفحة
+    renderPage();
+}
+
+function nextPage() {
+    if (currentPageIndex < currentPages.length - 1) {
+        currentPageIndex++;
+        renderPage();
+    }
+}
+
+function previousPage() {
+    if (currentPageIndex > 0) {
+        currentPageIndex--;
+        renderPage();
+    }
+}
 
 initialize();
 
     </script>
 </body>
 </html>
+
 
 
 
