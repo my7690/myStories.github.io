@@ -1109,6 +1109,18 @@ const stories = [
                 alert('حدث خطأ أثناء حفظ الأجوبة.');
             }
         }
+function displayAllStories() {
+    const storiesGrid = document.getElementById('storiesGrid');
+    if (!storiesGrid) return;
+
+    storiesGrid.innerHTML = stories.map(story => `
+        <div class="story-card" onclick="showStoryReading(${story.id})">
+            <span class="category">${story.category}</span>
+            <h3>${story.title}</h3>
+            <p>${story.description}</p>
+        </div>
+    `).join('');
+}
 
 // ========== التنقل بين الصفحات باستخدام الهاش (حل مشكلة الرفريش) ==========
 
@@ -1232,6 +1244,7 @@ initialize();
     </script>
 </body>
 </html>
+
 
 
 
