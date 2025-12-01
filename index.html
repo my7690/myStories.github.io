@@ -4830,19 +4830,15 @@ Her pov..
 
         let currentStoryId = null;
 
-        function setTheme(themeClass, storyTitle = '') {
-    // نحافظ على وجود dark-mode لو مفعّل
+function setTheme(themeClass, storyTitle = '') {
     const isDark = document.body.classList.contains("dark-mode");
 
-    // نمسح كل الثيمات
     document.body.className = "";
 
-    // نرجع ثيم القصة أو ثيم الهوم
     if (themeClass) {
         document.body.classList.add(themeClass);
     }
 
-    // نعيد dark-mode لو كان شغال
     if (isDark) {
         document.body.classList.add("dark-mode");
     }
@@ -4862,6 +4858,7 @@ Her pov..
         indicator.textContent = '🩵';
     }
 }
+
 
 
             const indicator = document.getElementById('themeIndicator');
@@ -5656,6 +5653,7 @@ initialize();
     </script>
 </body>
 </html>
+
 
 
 
