@@ -715,7 +715,7 @@ body {
 <!-- Navigation Bar -->
 <nav class="navbar">
     <div class="nav-container">
-        <a href="#home" class="nav-logo">📚-تحت الصيانة الى الان- مكتبة القصص</a>
+        <a href="#home" class="nav-logo">📚 (مكتبة القصص (تحت الصيانة</a>
         <div id="themeToggle" onclick="toggleTheme()" style="
     cursor: pointer;
     font-size: 1.5rem;
@@ -4826,6 +4826,7 @@ Her pov..
                 ]
             }
         ];
+
         let currentStoryId = null;
 
 function setTheme(themeClass, storyTitle = '') {
@@ -5426,30 +5427,6 @@ function previousPage() {
 }
 
 
-        function showQuestions() {
-            hideAllPages();
-            document.getElementById('questionsSection').classList.remove('hidden');
-
-            const story = stories.find(s => s.id === currentStoryId);
-            if (!story) return;
-
-            const questionsContainer = document.getElementById('questionsContainer');
-
-            questionsContainer.innerHTML = story.questions.map((question, index) => `
-                <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--secondary-color);">
-                    <h3 style="color: var(--text-color); margin-bottom: 1rem;">${question}</h3>
-                    <textarea class="idea-input" id="answer${index}" placeholder="اكتب إجابتك هنا..."></textarea>
-                </div>
-            `).join('');
-
-            questionsContainer.innerHTML += `
-                <button class="submit-idea-btn" onclick="submitAnswers()">إرسال الإجابات</button>
-            `;
-
-            displayStoryAnswers();
-        }
-
-
 async function displayStoryAnswers() {
     const answersContainer = document.getElementById('answersContainer');
     answersContainer.innerHTML = ''; // 🔥 تنظيف أولي
@@ -5652,7 +5629,6 @@ function showStoryReading(storyId, pushHash = true) {
 }
 
 
-
 function showQuestions(pushHash = true) {
     if (pushHash) window.location.hash = `questions-${currentStoryId}`;
     hideAllPages();
@@ -5699,7 +5675,7 @@ function handleHashNavigation() {
         return showStoryReading(id, false);
     }
 
-   if (hash.startsWith("questions-")) {
+if (hash.startsWith("questions-")) {
     const id = parseInt(hash.split("-")[1]);
     currentStoryId = id;
     showQuestions(false); 
@@ -5711,8 +5687,8 @@ function handleHashNavigation() {
 
 
 // شغل النظام
+window.addEventListener("DOMContentLoaded", handleHashNavigation);
 window.addEventListener("hashchange", handleHashNavigation);
-window.addEventListener("load", handleHashNavigation);
 
 // ========== التهيئة ==========
 function initialize() {
@@ -5868,8 +5844,4 @@ document.addEventListener("DOMContentLoaded", applyFontSize);
     </script>
 </body>
 </html>
-
-
-
-
 
