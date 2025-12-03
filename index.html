@@ -721,15 +721,59 @@ body.night-time {
         display: block;
     }
 }
+.shooting-star {
+    position: absolute;
+    width: 10px;   /* حجم الدائرة */
+    height: 10px;
+    background: radial-gradient(
+        circle,
+        rgba(255,255,255,0.9) 0%,
+        rgba(255,255,255,0.4) 40%,
+        transparent 70%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+
+    filter: blur(2px);
+    opacity: 0;
+    will-change: transform, opacity;
+
+    animation: sparkleMove 1.2s ease-out forwards, sparklePulse 1.2s ease-in-out infinite;
+}
+
+/* حركة الشهاب */
+@keyframes sparkleMove {
+    0% {
+        opacity: 1;
+        transform: translate(0,0) scale(0.6);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(120px, 180px) scale(1.3); /* اتجاه قطري */
+    }
+}
+
+/* نبض لطيف للدائرة */
+@keyframes sparklePulse {
+    0% { transform: scale(0.9); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(0.9); }
+}
+
+
 
 
     </style>
 </head>
 <body>
+ 
+
 <!-- Navigation Bar -->
-<nav class="navbar">
+<nav class="navbar sparkle-zone">
+
     <div class="nav-container">
-        <a href="#home" class="nav-logo">📚(تحت الصيانة) مكتبة القصص</a>
+       <div class="sparkle-layer"></div>
+        <a href="#home" class="nav-logo">📚 مكتبة القصص</a>
         <div id="themeToggle" onclick="toggleTheme()" style="
     cursor: pointer;
     font-size: 1.5rem;
@@ -748,6 +792,8 @@ body.night-time {
         </div>
     </div>
 </nav>
+
+
 <!-- القائمة المنسدلة في الموبايل -->
 <div id="mobileNav" class="mobile-nav">
     <a href="#home" onclick="toggleMobileNav()">الرئيسية</a>
@@ -759,13 +805,14 @@ body.night-time {
 
     <!-- Home Page -->
     <div id="homePage" class="container">
-        <header class="main-header">
+       <header class="main-header sparkle-zone">
+
             <h1>مرحباً بكم في مكتبة القصص</h1>
             <div class="theme-indicator" id="themeIndicator"> 🩵</div>
         </header>
 
         <!-- Story of the Day -->
-        <div class="story-of-day" id="storyOfDay" onclick="openDailyStory()">
+        <div class="story-of-day sparkle-zone" id="storyOfDay" onclick="openDailyStory()">
             <button class="reset-daily-btn" onclick="resetDailyStory(event)">🔄 تجربة قصة جديدة</button>
             <div class="daily-badge">قصة اليوم</div>
             <h2 id="dailyStoryTitle">...</h2>
@@ -890,7 +937,6 @@ body.night-time {
         const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
 
 // ========== البيانات الأساسية مع الثيمات ==========
-
 
 
 
@@ -4843,7 +4889,12 @@ Her pov..
                 ]
             }
         ];
-    let currentStoryId = null;
+
+
+
+
+
+        let currentStoryId = null;
 
 function setTheme(themeClass, storyTitle = '') {
     // احتفاظ بوضع الليل
@@ -5876,7 +5927,7 @@ function applyTimeBasedTheme() {
     // 🔥 خارج القصة → شغّل نهار/ليل
     const hour = new Date().getHours();
 
-    if (hour >= 4 && hour < 17) {
+    if (hour >= 6 && hour < 17) {
         document.body.classList.add("day-time");
         document.body.classList.remove("night-time");
     } else {
@@ -5898,6 +5949,47 @@ document.addEventListener("DOMContentLoaded", applyFontSize);
 
 
     </script>
+    
+<script>
+function spawnStarGPU(areaSelector) {
+    const area = document.querySelector(areaSelector);
+    if (!area) return;
+
+    const rect = area.getBoundingClientRect();
+
+    const star = document.createElement("div");
+    star.classList.add("shooting-star");
+
+    // Random start near upper area
+    const x = Math.random() * rect.width;
+    const y = Math.random() * rect.height * 0.2;
+
+    star.style.left = x + "px";
+    star.style.top = y + "px";
+
+    // Random duration
+    star.style.animationDuration = (1 + Math.random() * 0.5) + "s";
+
+    area.appendChild(star);
+
+    setTimeout(() => star.remove(), 2000);
+}
+
+function startStars(areaSelector, interval = 1500) {
+    setInterval(() => {
+        requestAnimationFrame(() => {
+            spawnStarGPU(areaSelector);
+        });
+    }, interval);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    startStars(".navbar", 1500);
+    startStars(".main-header", 1700);
+    startStars(".story-of-day", 2000);
+});
+</script>
 </body>
 </html>
+
 
