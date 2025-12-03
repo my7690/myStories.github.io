@@ -5876,7 +5876,7 @@ function applyTimeBasedTheme() {
     // 🔥 خارج القصة → شغّل نهار/ليل
     const hour = new Date().getHours();
 
-    if (hour >= 6 && hour < 17) {
+    if (hour >= 4 && hour < 17) {
         document.body.classList.add("day-time");
         document.body.classList.remove("night-time");
     } else {
@@ -5900,3 +5900,4 @@ document.addEventListener("DOMContentLoaded", applyFontSize);
     </script>
 </body>
 </html>
+
